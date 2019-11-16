@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Container } from './styles';
 
-export default function Plans() {
+export default function ManageMemberships() {
   return (
     <Container>
-      <h1>Plans</h1>
+      <h1>ManageMemberships</h1>
     </Container>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 
+import history from '~/services/history';
 import api from '~/services/api';
 
 import { Container, Content, ProductTable } from './styles';
@@ -19,6 +20,10 @@ export default function Students() {
     loadStudents();
   }, []);
 
+  const registerStudent = () => {
+    history.push('/students/new');
+  };
+
   const handleSearch = async ({ queryName }) => {
     // console.tron.log(queryName);
 
@@ -35,7 +40,11 @@ export default function Students() {
         <h1>Gerenciando alunos</h1>
 
         <aside>
-          <button className="registerStudent" type="button">
+          <button
+            className="registerStudent"
+            type="button"
+            onClick={registerStudent}
+          >
             <MdAdd size={20} color="#fff" />
             CADASTRAR
           </button>
@@ -54,7 +63,6 @@ export default function Students() {
               <th className="name">NOME</th>
               <th className="email">E-MAIL</th>
               <th className="age">IDADE</th>
-              <th className="options" />
             </tr>
           </thead>
           <tbody>

@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Container } from './styles';
 
-export default function HelpOrders() {
+export default function ManageHelpOrders() {
   return (
     <Container>
-      <h1>HelpOrders</h1>
+      <h1>ManageHelpOrders</h1>
     </Container>
   );
 }
