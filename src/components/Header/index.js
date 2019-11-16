@@ -1,30 +1,39 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import logo from '~/assets/logo_small_single.svg';
+import { signOut } from '~/store/modules/auth/actions';
+
+import logo from '~/assets/logo_small.svg';
 
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(signOut());
+  };
+
   return (
     <Container>
       <Content>
         <nav>
           <img src={logo} alt="GymPoint" />
-          <Link to="/dashboard">DASHBOARD</Link>
+          <Link to="/students">ALUNOS</Link>
+          <Link to="/plans">PLANOS</Link>
+          <Link to="/memberships">MATRÍCULAS</Link>
+          <Link to="/help_orders">PEDIDOS DE AUXÍLIO</Link>
         </nav>
 
         <aside>
           <Profile>
             <div>
-              <strong>Test</strong>
-              <Link to="/profile">Meu perfil</Link>
+              <strong>Diego Hernandez</strong>
+              <button type="button" onClick={handleLogOut}>
+                sair do sistema
+              </button>
             </div>
-            <img
-              src="https://api.adorable.io/avatars/50/abott@adorable.png"
-              alt="Test"
-            />
           </Profile>
         </aside>
       </Content>

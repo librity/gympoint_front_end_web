@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: #fff;
-  padding: 30px;
+  padding: 10px;
+  border: 1px solid #dcdcdc;
 `;
 
 export const Content = styled.div`
   height: 64px;
-  max-width: 900px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -19,13 +19,17 @@ export const Content = styled.div`
 
     img {
       margin-right: 20px;
+      margin-left: 20px;
       padding-right: 20px;
       border-right: 1px solid #eee;
     }
 
     a {
+      font-size: 15px;
       font-weight: bold;
-      color: #7159c1;
+      margin-right: 20px;
+      color: #999999;
+      text-align: left;
     }
   }
 
@@ -38,8 +42,8 @@ export const Content = styled.div`
 export const Profile = styled.div`
   display: flex;
   margin-left: 20px;
+  margin-right: 20px;
   padding-left: 20px;
-  border-left: 1px solid #eee;
 
   div {
     text-align: right;
@@ -47,14 +51,18 @@ export const Profile = styled.div`
 
     strong {
       display: block;
-      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      color: #666666;
+      text-align: left;
     }
 
-    a {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      color: #999;
+    button {
+      border: 0;
+      background: none;
+      font-size: 14px;
+      color: #de3b3b;
+      text-align: right;
     }
   }
 

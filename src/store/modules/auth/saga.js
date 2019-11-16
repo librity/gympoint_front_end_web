@@ -17,14 +17,13 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    console.tron.log(user.admin)
-
     if (!user.admin) {
       toast.error('Usuário não é administrador!');
       return;
     }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
+    console.tron.log(token, user);
 
     yield put(signInSuccess(token, user));
 
@@ -45,7 +44,12 @@ export function setToken({ payload }) {
   }
 }
 
+export function signOut() {
+  history.push('/');
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_OUT', signOut),
 ]);
