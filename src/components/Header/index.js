@@ -4,13 +4,9 @@ import { Link } from 'react-router-dom';
 
 import logo from '~/assets/logo_small_single.svg';
 
-import Notifications from '~/components/Notifications';
-
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
-  const profile = useSelector(state => state.user.profile);
-
   return (
     <Container>
       <Content>
@@ -20,19 +16,14 @@ export default function Header() {
         </nav>
 
         <aside>
-          <Notifications />
-
           <Profile>
             <div>
-              <strong>{profile.name}</strong>
+              <strong>Test</strong>
               <Link to="/profile">Meu perfil</Link>
             </div>
             <img
-              src={
-                profile.avatar.url ||
-                'https://api.adorable.io/avatars/50/abott@adorable.png'
-              }
-              alt={profile.name}
+              src="https://api.adorable.io/avatars/50/abott@adorable.png"
+              alt="Test"
             />
           </Profile>
         </aside>

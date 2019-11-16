@@ -15,9 +15,11 @@ export function* signIn({ payload }) {
       password,
     });
 
-    const { token, user, admin } = response.data;
+    const { token, user } = response.data;
 
-    if (!admin) {
+    console.tron.log(user.admin)
+
+    if (!user.admin) {
       toast.error('Usuário não é administrador!');
       return;
     }
@@ -43,12 +45,7 @@ export function setToken({ payload }) {
   }
 }
 
-export function signOut() {
-  history.push('/');
-}
-
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  takeLatest('@auth/SIGN_OUT', signOut),
 ]);
