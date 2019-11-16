@@ -24,11 +24,13 @@ export default function Students() {
         <h1>Gerenciando alunos</h1>
 
         <aside>
-          <button type="button">
-            <MdAdd size={20} />
+          <button className="registreStudent" type="button">
+            <MdAdd size={20} color="#fff" />
             CADASTRAR
           </button>
-          <MdSearch size={20} />
+          <button className="search" type="button">
+            <MdSearch size={20} color="#999" />
+          </button>
           <input placeholder="Buscar aluno" />
         </aside>
       </div>
