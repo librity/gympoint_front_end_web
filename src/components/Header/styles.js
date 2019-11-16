@@ -70,7 +70,7 @@ export const Profile = styled.div`
       text-align: right;
 
       &:hover {
-        color: ${darken(0.08, '#FD0058')};
+        color: ${darken(0.1, '#de3b3b')};
       }
     }
   }
