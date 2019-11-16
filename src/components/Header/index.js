@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -9,6 +9,8 @@ import logo from '~/assets/logo_small.svg';
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
+  const user = useSelector(state => state.user.profile);
+
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
@@ -29,7 +31,7 @@ export default function Header() {
         <aside>
           <Profile>
             <div>
-              <strong>Diego Hernandez</strong>
+              <strong>{user.name}</strong>
               <button type="button" onClick={handleLogOut}>
                 sair do sistema
               </button>

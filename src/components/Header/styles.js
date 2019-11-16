@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   background: #fff;
@@ -30,6 +31,10 @@ export const Content = styled.div`
       margin-right: 20px;
       color: #999999;
       text-align: left;
+
+      &:hover {
+        color: #444444;
+      }
     }
   }
 
@@ -54,7 +59,7 @@ export const Profile = styled.div`
       font-size: 14px;
       font-weight: bold;
       color: #666666;
-      text-align: left;
+      text-align: right;
     }
 
     button {
@@ -63,12 +68,10 @@ export const Profile = styled.div`
       font-size: 14px;
       color: #de3b3b;
       text-align: right;
-    }
-  }
 
-  img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+      &:hover {
+        color: ${darken(0.08, '#FD0058')};
+      }
+    }
   }
 `;
