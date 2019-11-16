@@ -21,7 +21,7 @@ export const Container = styled.div`
       flex-direction: row;
       justify-content: baseline;
 
-      .registreStudent {
+      .registerStudent {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -43,26 +43,31 @@ export const Container = styled.div`
         }
       }
 
-      .search {
-        position: relative;
-        left: 30px;
-
-        border: 0;
-        background: none;
+      form {
         display: flex;
         flex-direction: row;
-        align-items: center;
-      }
+        justify-content: baseline;
+        .search {
+          position: relative;
+          left: 30px;
 
-      input {
-        width: 250px;
-        text-indent: 30px;
-      }
+          border: 0;
+          background: none;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
 
-      input::placeholder {
-        font-size: 14px;
-        color: #999999;
-        text-align: left;
+        input {
+          width: 250px;
+          text-indent: 30px;
+        }
+
+        input::placeholder {
+          font-size: 14px;
+          color: #999999;
+          text-align: left;
+        }
       }
     }
   }

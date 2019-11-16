@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
+import { Form, Input } from '@rocketseat/unform';
 
 import api from '~/services/api';
 
@@ -18,20 +19,32 @@ export default function Students() {
     loadStudents();
   }, []);
 
+  const handleSearch = async ({ queryName }) => {
+    // console.tron.log(queryName);
+
+    const response = await api.get('/students', {
+      params: { name: queryName },
+    });
+
+    setStudents(response.data);
+  };
+
   return (
     <Container>
       <div>
         <h1>Gerenciando alunos</h1>
 
         <aside>
-          <button className="registreStudent" type="button">
+          <button className="registerStudent" type="button">
             <MdAdd size={20} color="#fff" />
             CADASTRAR
           </button>
-          <button className="search" type="button">
-            <MdSearch size={20} color="#999" />
-          </button>
-          <input placeholder="Buscar aluno" />
+          <Form onSubmit={handleSearch}>
+            <button className="search" type="submit">
+              <MdSearch size={20} color="#999" />
+            </button>
+            <Input name="queryName" type="text" placeholder="Buscar aluno" />
+          </Form>
         </aside>
       </div>
       <Content>
