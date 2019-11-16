@@ -21,7 +21,7 @@ export const Container = styled.div`
       flex-direction: row;
       justify-content: baseline;
 
-      .registerStudent {
+      .navigateNewStudent {
         display: flex;
         flex-direction: row;
         align-items: center;

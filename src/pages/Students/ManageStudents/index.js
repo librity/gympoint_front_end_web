@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
 
 import history from '~/services/history';
 import api from '~/services/api';
 
 import { Container, Content, ProductTable } from './styles';
+
+const studentQuerySchema = Yup.object().shape({
+  queryName: Yup.string(),
+});
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -20,7 +25,7 @@ export default function Students() {
     loadStudents();
   }, []);
 
-  const registerStudent = () => {
+  const navigateNewStudent = () => {
     history.push('/students/new');
   };
 
@@ -41,14 +46,14 @@ export default function Students() {
 
         <aside>
           <button
-            className="registerStudent"
+            className="navigateNewStudent"
             type="button"
-            onClick={registerStudent}
+            onClick={navigateNewStudent}
           >
             <MdAdd size={20} color="#fff" />
             CADASTRAR
           </button>
-          <Form onSubmit={handleSearch}>
+          <Form schema={studentQuerySchema} onSubmit={handleSearch}>
             <button className="search" type="submit">
               <MdSearch size={20} color="#999" />
             </button>
