@@ -32,6 +32,7 @@ export default function ManageMemberships() {
           { locale: pt }
         ),
       }));
+
       setMemberships(data);
     };
 
