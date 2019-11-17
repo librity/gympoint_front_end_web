@@ -107,11 +107,11 @@ export const ProductTable = styled.table`
     text-align: left;
   }
   .start_date {
-    width: 20%;
+    width: 18%;
     text-align: center;
   }
   .end_date {
-    width: 15%;
+    width: 18%;
     text-align: center;
   }
   .active {

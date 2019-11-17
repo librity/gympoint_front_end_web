@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { parseISO, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import history from '~/services/history';
 import api from '~/services/api';
@@ -15,7 +17,22 @@ export default function ManageMemberships() {
     const loadMemberships = async () => {
       const response = await api.get('memberships');
 
-      setMemberships(response.data);
+      const data = response.data.map(membership => ({
+        ...membership,
+        formattedStartDate: format(
+          parseISO(membership.start_date),
+          "d 'de' MMMM 'de' yyyy",
+          {
+            locale: pt,
+          }
+        ),
+        formattedEndDate: format(
+          parseISO(membership.end_date),
+          "d 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+      }));
+      setMemberships(data);
     };
 
     loadMemberships();
@@ -90,10 +107,10 @@ export default function ManageMemberships() {
                   </strong>
                 </td>
                 <td className="start_date">
-                  <strong>{membership.start_date}</strong>
+                  <strong>{membership.formattedStartDate}</strong>
                 </td>
                 <td className="end_date">
-                  <strong>{membership.end_date}</strong>
+                  <strong>{membership.formattedEndDate}</strong>
                 </td>
                 <td className="active">
                   {membership.active ? (
