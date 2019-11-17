@@ -86,9 +86,10 @@ export const Content = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
+    position: relative;
 
     label:first-child {
-      margin: 0 0 15px 5px;
+      margin: 0 0 50px 5px;
     }
 
     label {

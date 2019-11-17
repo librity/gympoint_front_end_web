@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 import * as Yup from 'yup';
 import { parseISO, format, addYears } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -34,6 +35,27 @@ const submitNewMembershipSchema = Yup.object().shape({
 });
 
 export default function NewMembership() {
+  const [students, setStudents] = useState([]);
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    const loadStudentsAndPlans = async () => {
+      const [loadedStudents, loadedPlans] = await Promise.all([
+        api.get('/students'),
+        api.get('/plans'),
+      ]);
+
+      const studentNames = loadedStudents.data.map(student => [
+        { value: student.id, label: student.name },
+      ]);
+
+      setStudents(studentNames);
+      setPlans(loadedPlans.data);
+    };
+
+    loadStudentsAndPlans();
+  }, []);
+
   const [membershipDuration, setMembershipDuration] = useState(0);
   const [membershipPrice, setMembershipPrice] = useState(0);
 
@@ -92,13 +114,18 @@ export default function NewMembership() {
           onSubmit={submitNewMembership}
           id="submitNewMembershipForm"
         >
-          <label htmlFor="nome">ALUNO</label>
-          <Input
-            id="nome"
-            name="nome"
-            type="text"
-            required
-            placeholder="Buscar aluno"
+          <label htmlFor="name">ALUNO</label>
+          <Select
+            name="name"
+            id="name"
+            className="studentSelector"
+            isDisabled={false}
+            isLoading={false}
+            isClearable
+            isRtl={false}
+            isSearchable
+            options={students}
+            defaultValue={students[0]}
           />
           <span>
             <span>
