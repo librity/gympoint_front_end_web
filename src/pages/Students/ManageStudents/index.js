@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import history from '~/services/history';
@@ -38,6 +39,20 @@ export default function ManageStudents() {
     });
 
     setStudents(response.data);
+  };
+
+  const handleDeleteStudent = async ({ id }) => {
+    if (window.confirm('Você tem certeza que deseja remover este aluno?')) {
+      try {
+        await api.delete(`/students/${id}`);
+
+        handleSearch('');
+
+        toast.success('Aluno apagado com sucesso!');
+      } catch (err) {
+        toast.error('Falha na ataulização, verifique os dados!');
+      }
+    }
   };
 
   return (
@@ -94,7 +109,11 @@ export default function ManageStudents() {
                   >
                     editar
                   </Link>
-                  <button className="delete" type="button" onClick={() => {}}>
+                  <button
+                    className="delete"
+                    type="button"
+                    onClick={() => handleDeleteStudent(student)}
+                  >
                     apagar
                   </button>
                 </td>

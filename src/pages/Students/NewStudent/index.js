@@ -93,13 +93,20 @@ export default function NewStudent() {
           id="submitNewStudentForm"
         >
           <label htmlFor="name">NOME COMPLETO</label>
-          <Input id="name" name="name" type="text" placeholder="John Doe" />
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="John Doe"
+            required
+          />
           <label htmlFor="email">ENDEREÇO DE E-MAIL</label>
           <Input
             id="email"
             name="email"
             type="email"
             placeholder="exemplo@email.com"
+            required
           />
           <span>
             <span>
@@ -118,7 +125,7 @@ export default function NewStudent() {
                 name="weight_metric"
                 type="number"
                 placeholder="60"
-                required="false"
+                required
               />
             </span>
             <span>
@@ -129,7 +136,7 @@ export default function NewStudent() {
                 type="number"
                 step="0.01"
                 placeholder="1,70"
-                required="false"
+                required
               />
             </span>
           </span>
