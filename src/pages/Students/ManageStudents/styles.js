@@ -16,6 +16,13 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
 
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #444444;
+      text-align: right;
+    }
+
     aside {
       display: flex;
       flex-direction: row;
@@ -47,6 +54,7 @@ export const Container = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: baseline;
+
         .search {
           position: relative;
           left: 30px;

@@ -11,12 +11,26 @@ import { Container, Content } from './styles';
 
 const submitNewStudentSchema = Yup.object().shape({
   name: Yup.string().required('O nome é obrigatório!'),
+
   email: Yup.string()
     .email('Insira um e-mail válido!')
     .required('O e-mail é obrigatório!'),
-  date_of_birth: Yup.date('Insira uma data válida!').required(),
-  weight_metric: Yup.number(),
-  height_metric: Yup.number(),
+
+  date_of_birth: Yup.date('Insira uma data válida!')
+    .min('1900-01-01', 'Insira uma data válida!')
+    .max(new Date(), 'Insira uma data válida!')
+    .required('A data de nascimento é obrigatória!'),
+
+  weight_metric: Yup.number('Insira um número inteiro!')
+    .integer('Apenas números inteiros!')
+    .min(0, 'Insira um peso válido!')
+    .max(635, 'Insira um peso válido!')
+    .required('A altura é obrigatória!'),
+
+  height_metric: Yup.number('Insira um número válido!')
+    .min(0, 'Insira uma altura válida!')
+    .max(2.72, 'Insira uma altura válida!')
+    .required('A altura é obrigatória!'),
 });
 
 export default function Students() {
@@ -32,12 +46,24 @@ export default function Students() {
     height_metric,
   }) => {
     try {
-      // console.tron.log(queryName);
-      await api.post('/students', {
-        body: { name, email, date_of_birth, weight_metric, height_metric },
+      console.tron.log(
+        name,
+        email,
+        date_of_birth,
+        weight_metric,
+        height_metric
+      );
+      const response = await api.post('/students', {
+        name,
+        email,
+        date_of_birth,
+        weight_metric,
+        height_metric,
       });
 
-      history.push('/students');
+      console.tron.log(response);
+
+      // history.push('/students');
       toast.success('Aluno cadastrado com sucesso!');
     } catch (err) {
       toast.error('Falha no cadastro, verifique os dados!');
@@ -61,7 +87,7 @@ export default function Students() {
           <button
             className="submitNewStudent"
             type="submit"
-            onClick={submitNewStudent}
+            form="submitNewStudentForm"
           >
             <MdDone size={20} color="#fff" />
             SALVAR
@@ -69,19 +95,40 @@ export default function Students() {
         </aside>
       </div>
       <Content>
-        <Form schema={submitNewStudentSchema} onSubmit={submitNewStudent}>
+        <Form
+          schema={submitNewStudentSchema}
+          onSubmit={submitNewStudent}
+          id="submitNewStudentForm"
+        >
           <strong>NOME COMPLETO</strong>
           <Input name="name" type="text" placeholder="John Doe" />
           <strong>ENDEREÇO DE E-MAIL</strong>
           <Input name="email" type="email" placeholder="exemplo@email.com" />
-          <div>
-            <strong>IDADE</strong>
-            <Input name="date_of_birth" type="date" />
-            <strong>PESO (em kg)</strong>
-            <Input name="weight_metric" type="number" placeholder="60" />
-            <strong>Altura (em m)</strong>
-            <Input name="height_metric" type="number" placeholder="1,70" />
-          </div>
+          <span>
+            <span>
+              <strong>DATA DE NASCIMENTO</strong>
+              <Input name="date_of_birth" type="date" required />
+            </span>
+            <span>
+              <strong>PESO (em kg)</strong>
+              <Input
+                name="weight_metric"
+                type="number"
+                placeholder="60"
+                required="false"
+              />
+            </span>
+            <span>
+              <strong>Altura (em metros)</strong>
+              <Input
+                name="height_metric"
+                type="number"
+                step="0.01"
+                placeholder="1,70"
+                required="false"
+              />
+            </span>
+          </span>
         </Form>
       </Content>
     </Container>

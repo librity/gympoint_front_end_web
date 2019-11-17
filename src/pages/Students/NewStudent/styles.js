@@ -8,13 +8,20 @@ export const Container = styled.div`
   align-items: center;
 
   div {
-    width: 80%;
+    width: 60%;
     height: 100%;
-    margin: 40px 0 20px 0;
+    margin-top: 40px;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #444444;
+      text-align: right;
+    }
 
     aside {
       display: flex;
@@ -30,7 +37,7 @@ export const Container = styled.div`
         text-align: center;
         margin-left: 20px;
         padding: 8px 20px;
-        background: #fd0058;
+        background: #cbcbcb;
         color: #fff;
         border: 0;
         border-radius: 4px;
@@ -39,7 +46,7 @@ export const Container = styled.div`
         transition: background 0.2s;
 
         &:hover {
-          background: ${darken(0.03, '#FD0058')};
+          background: ${darken(0.03, '#CBCBCB')};
         }
       }
 
@@ -69,80 +76,58 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  padding: 30px;
   background: #fff;
   border-radius: 4px;
-  width: 80%;
+  padding: 30px;
 
   form {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
 
-    thead th {
+    strong:first-child {
+      margin: 0 0 15px 5px;
+    }
+
+    strong {
       text-align: left;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 14px;
       color: #444444;
+      font-weight: bold;
+      margin: 15px 5px;
     }
 
-    tbody {
-      tr td {
-        text-align: left;
-        padding: 15px 0;
-        border-bottom: 1px solid #eee;
-
-        strong {
-          font-size: 16px;
-          font-weight: normal;
-          color: #666666;
-          text-align: left;
-          line-height: 20px;
-        }
-      }
-
-      tr:last-child td {
-        padding-top: 15px;
-        padding-bottom: 0;
-
-        border: none;
-      }
+    input {
+      width: 100%;
+      height: 60px;
+      text-indent: 10px;
     }
 
-    .name {
-      width: 40%;
-    }
-    .email {
-      width: 30%;
-    }
-    .age {
-      width: 10%;
-      text-align: center;
+    input::placeholder {
+      font-size: 16px;
+      color: #999999;
+      text-align: left;
     }
 
-    .options {
+    span {
+      color: #fb6f91;
+      font-weight: bold;
+
       display: flex;
       flex-direction: row;
-      justify-content: right;
+      width: 100%;
+      margin-right: 15px;
+      margin-top: 15px;
 
-      button {
-        border: 0;
-        background: none;
-        font-size: 15px;
-        text-align: right;
-        margin-left: 20px;
+      span {
+        flex-direction: column;
+        width: 100%;
       }
+    }
 
-      .edit {
-        color: #4d85ee;
-        &:hover {
-          color: ${darken(0.1, '#4d85ee')};
-        }
-      }
-      .delete {
-        color: #de3b3b;
-        &:hover {
-          color: ${darken(0.1, '#de3b3b')};
-        }
-      }
+    span:last-child {
+      margin-right: 0;
     }
   }
 `;
