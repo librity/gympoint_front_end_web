@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import history from '~/services/history';
@@ -12,7 +13,7 @@ const studentQuerySchema = Yup.object().shape({
   queryName: Yup.string(),
 });
 
-export default function Students() {
+export default function ManageStudents() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function Students() {
         <ProductTable>
           <thead>
             <tr>
+              <th className="id">ID</th>
               <th className="name">NOME</th>
               <th className="email">E-MAIL</th>
               <th className="age">IDADE</th>
@@ -73,6 +75,9 @@ export default function Students() {
           <tbody>
             {students.map(student => (
               <tr>
+                <td className="id">
+                  <strong>{student.id}</strong>
+                </td>
                 <td className="name">
                   <strong>{student.name}</strong>
                 </td>
@@ -83,9 +88,12 @@ export default function Students() {
                   <strong>{student.age}</strong>
                 </td>
                 <td className="options">
-                  <button className="edit" type="button" onClick={() => {}}>
+                  <Link
+                    to={{ pathname: '/students/edit', state: { student } }}
+                    className="edit"
+                  >
                     editar
-                  </button>
+                  </Link>
                   <button className="delete" type="button" onClick={() => {}}>
                     apagar
                   </button>

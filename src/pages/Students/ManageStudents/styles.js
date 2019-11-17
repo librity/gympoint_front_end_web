@@ -121,6 +121,10 @@ export const ProductTable = styled.table`
     }
   }
 
+  .id {
+    width: 5%;
+    text-align: left;
+  }
   .name {
     width: 40%;
   }

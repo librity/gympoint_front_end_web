@@ -33,7 +33,7 @@ const submitNewStudentSchema = Yup.object().shape({
     .required('A altura é obrigatória!'),
 });
 
-export default function Students() {
+export default function NewStudent() {
   const navigateManageStudents = () => {
     history.push('/students');
   };
