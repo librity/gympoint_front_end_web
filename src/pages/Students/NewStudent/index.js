@@ -46,14 +46,7 @@ export default function NewStudent() {
     height_metric,
   }) => {
     try {
-      console.tron.log(
-        name,
-        email,
-        date_of_birth,
-        weight_metric,
-        height_metric
-      );
-      const response = await api.post('/students', {
+      await api.post('/students', {
         name,
         email,
         date_of_birth,
@@ -61,11 +54,10 @@ export default function NewStudent() {
         height_metric,
       });
 
-      console.tron.log(response);
-
-      // history.push('/students');
       toast.success('Aluno cadastrado com sucesso!');
+      history.push('/students');
     } catch (err) {
+      // console.tron.log(err);
       toast.error('Falha no cadastro, verifique os dados!');
     }
   };
