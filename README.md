@@ -39,9 +39,10 @@ A versão web do projeto Gympoint representa a visão da academia, ou seja, toda
 
 Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-end** da aplicação:
 
-1. Adicione um campo boolean `true/false` na listagem de matrículas indicando se a matrícula está ativa ou não, ou seja, se a data de término é posterior à atual e a data de início inferior (utilize um campo `VIRTUAL`).
+- [x] Adicione um campo boolean `true/false` na listagem de matrículas indicando se a matrícula está ativa ou não, ou seja, se a data de término é posterior à atual e a data de início inferior (utilize um campo `VIRTUAL`).
 
 Por exemplo, no model de Matrícula, adicione um novo campo:
+
 ```js
 active: {
   type: Sequelize.VIRTUAL(Sequelize.BOOLEAN, [
@@ -65,20 +66,24 @@ const registrations = await Registration.findAll({
 });
 ```
 
-2. Permita que a listagem de alunos (`/users`) seja filtrada por nome recebendo um Query Parameter `?q=Diego` e buscando no banco usuários com esse filtro (utilize o operador `like`). Caso o parâmetro não seja passado, retorne todos usuários;
+- [x] Permita que a listagem de alunos (`/users`) seja filtrada por nome recebendo um Query Parameter `?q=Diego` e buscando no banco usuários com esse filtro (utilize o operador `like`). Caso o parâmetro não seja passado, retorne todos usuários;
 
 ### Informações importantes
 
-1. Antes de deletar qualquer registro do banco crie uma verificação adicinal usando a função `confirm` do JavaScript;
-2. Para formatação de datas utilize sempre a biblioteca `date-fns`;
-3. Não realize formatações de valores dentro do `return ()` nos componentes React, opte por formatar os dados assim que recebidos da API;
-4. No cadastro/edição de planos e matrículas os inputs com fundo cinza são calculados automaticamente com base na seleção dos outros valores;
-5. No cadastro/edição de matrícula deve ser possível buscar o aluno pelo nome, utilize o método `async` da biblioteca [React Select](https://react-select.com/home#async). Os planos devem ser buscados da API assim que a página carregar e não devem possuir filtro.
+- [x] Antes de deletar qualquer registro do banco crie uma verificação adicinal usando a função `confirm` do JavaScript;
+- [x] Para formatação de datas utilize sempre a biblioteca `date-fns`;
+- [x] Não realize formatações de valores dentro do `return ()` nos componentes React, opte por formatar os dados assim que recebidos da API;
+- [x] No cadastro/edição de planos e matrículas os inputs com fundo cinza são calculados automaticamente com base na seleção dos outros valores;
+- [ ] No cadastro/edição de matrícula deve ser possível buscar o aluno pelo nome, utilize o método `async` da biblioteca [React Select](https://react-select.com/home#async). Os planos devem ser buscados da API assim que a página carregar e não devem possuir filtro.
 
 ### Opcionais
 
-1. Adicione paginação no front-end e back-end para todas listagens;
-2. Utilize máscaras para inputs numéricos de valores, peso e altura;
+- [ ] Adicione paginação no front-end e back-end para todas listagens;
+- [ ] Utilize [máscaras](https://github.com/sanniassin/react-input-mask) para inputs numéricos de valores, peso e altura;
+- [ ] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons;
+- [ ] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/);
+- [ ] Add plan.symbol emoji input in the New/EditPlan forms;
+- [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
 
 ## 🎨 Layout
 

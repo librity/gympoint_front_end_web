@@ -19,6 +19,7 @@ export default function ManageMemberships() {
 
       const data = response.data.map(membership => ({
         ...membership,
+        formattedTitle: `${membership.plan.symbol} ${membership.plan.title}`,
         formattedStartDate: format(
           parseISO(membership.start_date),
           "d 'de' MMMM 'de' yyyy",
@@ -103,9 +104,7 @@ export default function ManageMemberships() {
                   <strong>{membership.student.name}</strong>
                 </td>
                 <td className="plan_title">
-                  <strong>
-                    {membership.plan.symbol} {membership.plan.title}
-                  </strong>
+                  <strong>{membership.formattedTitle}</strong>
                 </td>
                 <td className="start_date">
                   <strong>{membership.formattedStartDate}</strong>
