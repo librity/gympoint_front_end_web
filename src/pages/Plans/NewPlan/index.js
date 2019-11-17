@@ -30,7 +30,7 @@ export default function NewPlan() {
   const [planDuration, setPlanDuration] = useState(0);
   const [planPrice, setPlanPrice] = useState(0);
 
-  const totalPrice = useMemo(() => planDuration * planPrice, [
+  const totalPrice = useMemo(() => formatPricePtBr(planDuration * planPrice), [
     planDuration,
     planPrice,
   ]);
@@ -41,14 +41,11 @@ export default function NewPlan() {
 
   const submitNewPlan = async ({ title, duration, price }) => {
     try {
-      console.tron.log(title, duration, price);
-
-      const response = await api.post('/plans', {
+      await api.post('/plans', {
         title,
         duration,
         price,
       });
-      console.tron.log(response);
 
       toast.success('Aluno cadastrado com sucesso!');
       history.push('/plans');
@@ -119,8 +116,7 @@ export default function NewPlan() {
               <Input
                 id="total_price"
                 name="total_price"
-                type="number"
-                step="0.01"
+                type="text"
                 readOnly
                 value={totalPrice}
               />
