@@ -141,6 +141,7 @@ export const ProductTable = styled.table`
     display: flex;
     flex-direction: row;
     justify-content: right;
+    align-items: baseline;
 
     button {
       border: 0;

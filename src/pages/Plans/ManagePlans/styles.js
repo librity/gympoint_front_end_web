@@ -29,7 +29,7 @@ export const Container = styled.div`
       flex-direction: row;
       justify-content: baseline;
 
-      .navigateNewStudent {
+      .navigateNewPlan {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -114,6 +114,7 @@ export const ProductTable = styled.table`
     display: flex;
     flex-direction: row;
     justify-content: right;
+    align-items: baseline;
 
     button {
       border: 0;

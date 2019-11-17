@@ -1,11 +1,130 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { MdAdd, MdCheckCircle } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { Container } from './styles';
+import history from '~/services/history';
+import api from '~/services/api';
+
+import { Container, Content, ProductTable } from './styles';
 
 export default function ManageMemberships() {
+  const [memberships, setMemberships] = useState([]);
+
+  useEffect(() => {
+    const loadMemberships = async () => {
+      const response = await api.get('memberships');
+
+      setMemberships(response.data);
+    };
+
+    loadMemberships();
+  }, []);
+
+  const navigateNewMemberships = () => {
+    history.push('/memberships/new');
+  };
+
+  const handleSearch = async ({ queryName }) => {
+    const response = await api.get('/memberships', {
+      params: { name: queryName },
+    });
+
+    setMemberships(response.data);
+  };
+
+  const handleDeleteMembership = async ({ id, student }) => {
+    if (window.confirm('Você tem certeza que deseja remover esta matrícula?')) {
+      try {
+        await api.delete(`/students/${student.id}/memberships/${id}`);
+
+        handleSearch('');
+
+        toast.success('Matrícula apagada com sucesso!');
+      } catch (err) {
+        toast.error('Falha na ataulização, verifique os dados!');
+      }
+    }
+  };
+
   return (
     <Container>
-      <h1>ManageMemberships</h1>
+      <div>
+        <h1>Gerenciando matrículas</h1>
+
+        <aside>
+          <button
+            className="navigateNewMemberships"
+            type="button"
+            onClick={navigateNewMemberships}
+          >
+            <MdAdd size={20} color="#fff" />
+            CADASTRAR
+          </button>
+        </aside>
+      </div>
+      <Content>
+        <ProductTable>
+          <thead>
+            <tr>
+              <th className="id">ID</th>
+              <th className="student_name">ALUNO</th>
+              <th className="plan_title">PLANO</th>
+              <th className="start_date">INÍCIO</th>
+              <th className="end_date">TÉRMINO</th>
+              <th className="active">ATIVA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {memberships.map(membership => (
+              <tr>
+                <td className="id">
+                  <strong>{membership.id}</strong>
+                </td>
+                <td className="student_name">
+                  <strong>{membership.student.name}</strong>
+                </td>
+                <td className="plan_title">
+                  <strong>
+                    {membership.plan.symbol} {membership.plan.title}
+                  </strong>
+                </td>
+                <td className="start_date">
+                  <strong>{membership.start_date}</strong>
+                </td>
+                <td className="end_date">
+                  <strong>{membership.end_date}</strong>
+                </td>
+                <td className="active">
+                  {membership.active ? (
+                    <MdCheckCircle size={20} color="#42cb59" />
+                  ) : (
+                    <MdCheckCircle size={20} color="#eee" />
+                  )}
+                </td>
+                <td className="options">
+                  <Link
+                    to={{
+                      pathname: '/memberships/edit',
+                      state: { membership },
+                    }}
+                    className="edit"
+                  >
+                    editar
+                  </Link>
+                  <button
+                    className="delete"
+                    type="button"
+                    onClick={() => handleDeleteMembership(membership)}
+                  >
+                    apagar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </ProductTable>
+      </Content>
     </Container>
   );
 }

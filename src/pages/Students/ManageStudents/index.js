@@ -32,8 +32,6 @@ export default function ManageStudents() {
   };
 
   const handleSearch = async ({ queryName }) => {
-    // console.tron.log(queryName);
-
     const response = await api.get('/students', {
       params: { name: queryName },
     });

@@ -28,13 +28,11 @@ export default function ManagePlans() {
     loadPlans();
   }, []);
 
-  const navigateNewStudent = () => {
+  const navigateNewPlan = () => {
     history.push('/plans/new');
   };
 
   const handleSearch = async ({ queryName }) => {
-    // console.tron.log(queryName);
-
     const response = await api.get('/plans', {
       params: { name: queryName },
     });
@@ -63,9 +61,9 @@ export default function ManagePlans() {
 
         <aside>
           <button
-            className="navigateNewStudent"
+            className="navigateNewPlan"
             type="button"
-            onClick={navigateNewStudent}
+            onClick={navigateNewPlan}
           >
             <MdAdd size={20} color="#fff" />
             CADASTRAR
