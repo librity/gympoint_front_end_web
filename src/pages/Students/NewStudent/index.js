@@ -92,18 +92,29 @@ export default function NewStudent() {
           onSubmit={submitNewStudent}
           id="submitNewStudentForm"
         >
-          <strong>NOME COMPLETO</strong>
-          <Input name="name" type="text" placeholder="John Doe" />
-          <strong>ENDEREÇO DE E-MAIL</strong>
-          <Input name="email" type="email" placeholder="exemplo@email.com" />
+          <label htmlFor="name">NOME COMPLETO</label>
+          <Input id="name" name="name" type="text" placeholder="John Doe" />
+          <label htmlFor="email">ENDEREÇO DE E-MAIL</label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="exemplo@email.com"
+          />
           <span>
             <span>
-              <strong>DATA DE NASCIMENTO</strong>
-              <Input name="date_of_birth" type="date" required />
+              <label htmlFor="date_of_birth">DATA DE NASCIMENTO</label>
+              <Input
+                id="date_of_birth"
+                name="date_of_birth"
+                type="date"
+                required
+              />
             </span>
             <span>
-              <strong>PESO (em kg)</strong>
+              <label htmlFor="weight_metric">PESO (em kg)</label>
               <Input
+                id="weight_metric"
                 name="weight_metric"
                 type="number"
                 placeholder="60"
@@ -111,8 +122,9 @@ export default function NewStudent() {
               />
             </span>
             <span>
-              <strong>Altura (em metros)</strong>
+              <label htmlFor="height_metric">Altura (em metros)</label>
               <Input
+                id="height_metric"
                 name="height_metric"
                 type="number"
                 step="0.01"

@@ -11,41 +11,32 @@ import api from '~/services/api';
 
 import { Container, Content } from './styles';
 
+const updateStudentSchema = Yup.object().shape({
+  name: Yup.string().required('O nome é obrigatório!'),
+
+  email: Yup.string()
+    .email('Insira um e-mail válido!')
+    .required('O e-mail é obrigatório!'),
+
+  date_of_birth: Yup.date('Insira uma data válida!')
+    .min('1900-01-01', 'Insira uma data válida!')
+    .max(new Date(), 'Insira uma data válida!')
+    .required('A data de nascimento é obrigatória!'),
+
+  weight_metric: Yup.number('Insira um número inteiro!')
+    .integer('Apenas números inteiros!')
+    .min(0, 'Insira um peso válido!')
+    .max(635, 'Insira um peso válido!')
+    .required('A altura é obrigatória!'),
+
+  height_metric: Yup.number('Insira um número válido!')
+    .min(0, 'Insira uma altura válida!')
+    .max(2.72, 'Insira uma altura válida!')
+    .required('A altura é obrigatória!'),
+});
+
 export default function EditStudent({ location }) {
   const { student } = location.state;
-  const { name, email, date_of_birth, weight_metric, height_metric } = student;
-
-  const initialData = {
-    name,
-    email,
-    date_of_birth,
-    weight_metric,
-    height_metric,
-  };
-
-  const updateStudentSchema = Yup.object().shape({
-    name: Yup.string().required('O nome é obrigatório!'),
-
-    email: Yup.string()
-      .email('Insira um e-mail válido!')
-      .required('O e-mail é obrigatório!'),
-
-    date_of_birth: Yup.date('Insira uma data válida!')
-      .min('1900-01-01', 'Insira uma data válida!')
-      .max(new Date(), 'Insira uma data válida!')
-      .required('A data de nascimento é obrigatória!'),
-
-    weight_metric: Yup.number('Insira um número inteiro!')
-      .integer('Apenas números inteiros!')
-      .min(0, 'Insira um peso válido!')
-      .max(635, 'Insira um peso válido!')
-      .required('A altura é obrigatória!'),
-
-    height_metric: Yup.number('Insira um número válido!')
-      .min(0, 'Insira uma altura válida!')
-      .max(2.72, 'Insira uma altura válida!')
-      .required('A altura é obrigatória!'),
-  });
 
   const navigateManageStudents = () => {
     history.push('/students');
@@ -104,36 +95,46 @@ export default function EditStudent({ location }) {
           schema={updateStudentSchema}
           onSubmit={updateStudent}
           id="updateStudentForm"
-          initialData={initialData}
+          initialData={student}
         >
-          <strong>NOME COMPLETO</strong>
-          <Input name="name" type="text" placeholder={student.name} />
-          <strong>ENDEREÇO DE E-MAIL</strong>
-          <Input name="email" type="email" placeholder={student.email} />
+          <label htmlFor="name">NOME COMPLETO</label>
+          <Input id="name" name="name" type="text" placeholder="John Doe" />
+          <label htmlFor="email">ENDEREÇO DE E-MAIL</label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="exemplo@email.com"
+          />
           <span>
             <span>
-              <strong>DATA DE NASCIMENTO</strong>
+              <label htmlFor="date_of_birth">DATA DE NASCIMENTO</label>
               <Input
+                id="date_of_birth"
                 name="date_of_birth"
                 type="date"
-                placeholder={student.date_of_birth}
+                required
               />
             </span>
             <span>
-              <strong>PESO (em kg)</strong>
+              <label htmlFor="weight_metric">PESO (em kg)</label>
               <Input
+                id="weight_metric"
                 name="weight_metric"
                 type="number"
-                placeholder={student.weight_metric}
+                placeholder="60"
+                required="false"
               />
             </span>
             <span>
-              <strong>Altura (em metros)</strong>
+              <label htmlFor="height_metric">Altura (em metros)</label>
               <Input
+                id="height_metric"
                 name="height_metric"
                 type="number"
                 step="0.01"
-                placeholder={student.height_metric}
+                placeholder="1,70"
+                required="false"
               />
             </span>
           </span>

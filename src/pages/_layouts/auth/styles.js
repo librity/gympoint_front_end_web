@@ -22,7 +22,7 @@ export const Content = styled.div`
     flex-direction: column;
     margin-top: 30px;
 
-    strong {
+    label {
       font-size: 14px;
       color: #444444;
       text-align: left;

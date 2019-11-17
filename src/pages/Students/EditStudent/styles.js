@@ -86,11 +86,11 @@ export const Content = styled.div`
     width: 100%;
     height: 100%;
 
-    strong:first-child {
+    label:first-child {
       margin: 0 0 15px 5px;
     }
 
-    strong {
+    label {
       text-align: left;
       font-size: 14px;
       color: #444444;

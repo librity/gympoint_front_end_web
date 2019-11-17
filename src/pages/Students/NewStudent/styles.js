@@ -86,14 +86,14 @@ export const Content = styled.div`
     width: 100%;
     height: 100%;
 
-    strong:first-child {
+    label:first-child {
       margin: 0 0 15px 5px;
     }
 
-    strong {
-      text-align: left;
+    label {
       font-size: 14px;
       color: #444444;
+      text-align: left;
       font-weight: bold;
       margin: 15px 5px;
     }

@@ -29,10 +29,20 @@ export default function SignIn() {
       <img src={logo} alt="GymPoint" />
 
       <Form schema={signInSchema} onSubmit={handleSubmit}>
-        <strong>SEU E-MAIL</strong>
-        <Input name="email" type="email" placeholder="exemplo@gympoint.com" />
-        <strong>SUA SENHA</strong>
-        <Input name="password" type="password" placeholder="*************" />
+        <label htmlFor="email">SEU E-MAIL </label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="exemplo@gympoint.com"
+        />
+        <label htmlFor="password">SUA SENHA</label>
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="*************"
+        />
 
         <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
       </Form>
