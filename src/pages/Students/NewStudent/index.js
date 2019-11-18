@@ -57,14 +57,13 @@ export default function NewStudent() {
       toast.success('Aluno cadastrado com sucesso!');
       history.push('/students');
     } catch (err) {
-      // console.tron.log(err);
       toast.error('Falha no cadastro, verifique os dados!');
     }
   };
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Cadastro de aluno</h1>
 
         <aside>

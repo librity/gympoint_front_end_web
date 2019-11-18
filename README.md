@@ -84,6 +84,7 @@ const registrations = await Registration.findAll({
 - [ ] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/);
 - [ ] Add plan.symbol emoji input in the New/EditPlan forms;
 - [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
+- [ ] Join auth & user store modules;
 
 ## 🎨 Layout
 

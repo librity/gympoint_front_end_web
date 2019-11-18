@@ -61,14 +61,13 @@ export default function EditStudent({ location }) {
       toast.success('Aluno atualizado com sucesso!');
       history.push('/students');
     } catch (err) {
-      // console.tron.log(err);
       toast.error('Falha na ataulização, verifique os dados!');
     }
   };
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Edição de aluno</h1>
 
         <aside>

@@ -35,7 +35,13 @@ const submitNewMembershipSchema = Yup.object().shape({
 });
 
 export default function NewMembership() {
-  
+  const ref = useRef();
+  const { defaultValue1, registerField } = useField('plan_id');
+  const { defaultValue2, registerField2 } = useField('student_id');
+
+  useEffect(() => {
+    registerField();
+  }, [ref.current]); // eslint-disable-line
 
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);

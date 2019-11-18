@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { Container, Content, ProductTable } from './styles';
+import { Container, Scroll, ProductTable } from './styles';
 
 const studentQuerySchema = Yup.object().shape({
   queryName: Yup.string(),
@@ -55,7 +55,7 @@ export default function ManageStudents() {
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Gerenciando alunos</h1>
 
         <aside>
@@ -75,7 +75,7 @@ export default function ManageStudents() {
           </Form>
         </aside>
       </div>
-      <Content>
+      <Scroll>
         <ProductTable>
           <thead>
             <tr>
@@ -119,7 +119,7 @@ export default function ManageStudents() {
             ))}
           </tbody>
         </ProductTable>
-      </Content>
+      </Scroll>
     </Container>
   );
 }

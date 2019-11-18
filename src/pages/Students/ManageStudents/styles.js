@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { darken } from 'polished';
 
 export const Container = styled.div`
@@ -7,7 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  div {
+  .pageHeader {
     width: 80%;
     height: 100%;
     margin: 40px 0 20px 0;
@@ -82,15 +83,18 @@ export const Container = styled.div`
   }
 `;
 
-export const Content = styled.table`
+export const Scroll = styled(PerfectScrollbar)`
   padding: 30px;
   background: #fff;
   border-radius: 4px;
   width: 80%;
+  margin-top: 20px;
+  max-height: 75vh;
 `;
 
 export const ProductTable = styled.table`
   width: 100%;
+  padding: 5px 15px;
 
   thead th {
     text-align: left;
@@ -149,6 +153,8 @@ export const ProductTable = styled.table`
       font-size: 15px;
       text-align: right;
       margin-left: 20px;
+      padding-bottom: 5px;
+      padding-top: 5px;
     }
 
     .edit {

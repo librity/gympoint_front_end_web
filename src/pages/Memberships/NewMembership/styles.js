@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  div {
+  .pageHeader {
     width: 60%;
     height: 100%;
     margin-top: 40px;
@@ -81,15 +81,18 @@ export const Content = styled.div`
   border-radius: 4px;
   padding: 30px;
 
+  width: 60%;
+  height: 100%;
+  margin-top: 40px;
+
   form {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    position: relative;
 
     label:first-child {
-      margin: 0 0 50px 5px;
+      margin: 0 0 15px 5px;
     }
 
     label {
@@ -100,19 +103,36 @@ export const Content = styled.div`
       margin: 15px 5px;
     }
 
-    input {
-      width: 100%;
-      height: 60px;
-      text-indent: 10px;
+    .SelectorInput * {
+      text-align: left;
+
+      input {
+        width: 100%;
+        height: 45px;
+      }
+
+      input::placeholder {
+        font-size: 16px;
+        color: #999999;
+      }
     }
 
-    input::placeholder {
+    .unformInput {
+      width: 100%;
+      height: 60px;
+    }
+
+    .unformInput::placeholder {
       font-size: 16px;
       color: #999999;
       text-align: left;
     }
 
     span {
+      * {
+        text-indent: 10px;
+      }
+
       color: #fb6f91;
       font-weight: bold;
 
@@ -125,6 +145,18 @@ export const Content = styled.div`
       span {
         flex-direction: column;
         width: 100%;
+
+        .SelectorInput {
+          * {
+            color: #444;
+            font-weight: normal;
+          }
+
+          input {
+            width: 100%;
+            height: 55px;
+          }
+        }
       }
     }
 

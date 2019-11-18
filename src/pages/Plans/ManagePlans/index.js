@@ -8,7 +8,7 @@ import api from '~/services/api';
 
 import { formatPricePtBr } from '~/util/format';
 
-import { Container, Content, ProductTable } from './styles';
+import { Container, Scroll, ProductTable } from './styles';
 
 export default function ManagePlans() {
   const [plans, setPlans] = useState([]);
@@ -56,7 +56,7 @@ export default function ManagePlans() {
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Gerenciando planos</h1>
 
         <aside>
@@ -70,7 +70,7 @@ export default function ManagePlans() {
           </button>
         </aside>
       </div>
-      <Content>
+      <Scroll>
         <ProductTable>
           <thead>
             <tr>
@@ -114,7 +114,7 @@ export default function ManagePlans() {
             ))}
           </tbody>
         </ProductTable>
-      </Content>
+      </Scroll>
     </Container>
   );
 }

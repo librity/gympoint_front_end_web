@@ -8,7 +8,7 @@ import pt from 'date-fns/locale/pt';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { Container, Content, ProductTable } from './styles';
+import { Container, Scroll, ProductTable } from './styles';
 
 export default function ManageMemberships() {
   const [memberships, setMemberships] = useState([]);
@@ -68,7 +68,7 @@ export default function ManageMemberships() {
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Gerenciando matrículas</h1>
 
         <aside>
@@ -82,7 +82,7 @@ export default function ManageMemberships() {
           </button>
         </aside>
       </div>
-      <Content>
+      <Scroll>
         <ProductTable>
           <thead>
             <tr>
@@ -141,7 +141,7 @@ export default function ManageMemberships() {
             ))}
           </tbody>
         </ProductTable>
-      </Content>
+      </Scroll>
     </Container>
   );
 }

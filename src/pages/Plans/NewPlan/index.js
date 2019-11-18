@@ -50,14 +50,13 @@ export default function NewPlan() {
       toast.success('Aluno cadastrado com sucesso!');
       history.push('/plans');
     } catch (err) {
-      // console.tron.log(err);
       toast.error('Falha no cadastro, verifique os dados!');
     }
   };
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Cadastro de plano</h1>
 
         <aside>

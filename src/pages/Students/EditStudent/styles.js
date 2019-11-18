@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  div {
+  .pageHeader {
     width: 60%;
     height: 100%;
     margin-top: 40px;
@@ -80,6 +80,10 @@ export const Content = styled.div`
   background: #fff;
   border-radius: 4px;
   padding: 30px;
+
+  width: 60%;
+  height: 100%;
+  margin-top: 40px;
 
   form {
     display: flex;

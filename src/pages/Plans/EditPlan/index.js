@@ -54,14 +54,13 @@ export default function EditPlan({ location }) {
       toast.success('Plano atualizado com sucesso!');
       history.push('/plans');
     } catch (err) {
-      // console.tron.log(err);
       toast.error('Falha na ataulização, verifique os dados!');
     }
   };
 
   return (
     <Container>
-      <div>
+      <div className="pageHeader">
         <h1>Edição de plano</h1>
 
         <aside>
