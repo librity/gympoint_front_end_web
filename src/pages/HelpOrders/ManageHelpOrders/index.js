@@ -46,7 +46,11 @@ export default function ManageHelpOrders() {
                 </td>
 
                 <td className="options">
-                  <AnswerHelpOrderModal helpOrder={helpOrder} className="edit">
+                  <AnswerHelpOrderModal
+                    helpOrder={helpOrder}
+                    handleSearch={handleSearch}
+                    className="edit"
+                  >
                     responder
                   </AnswerHelpOrderModal>
                 </td>

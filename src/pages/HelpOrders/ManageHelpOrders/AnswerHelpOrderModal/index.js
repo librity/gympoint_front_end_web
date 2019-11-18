@@ -7,17 +7,17 @@ import * as Yup from 'yup';
 
 import api from '~/services/api';
 
-import { HelpOrderModal, HelpOrderFade } from './styles';
+import { HelpOrderModal, HelpOrderFade, Scroll } from './styles';
 
 const helpOrderAnswerSchema = Yup.object().shape({
   answer: Yup.string()
     .trim()
-    .min(1)
-    .max(240)
-    .required(),
+    .min(1, 'A resposta não pode ser vazia!')
+    .max(240, 'Tamanho máximo: 240 characteres!')
+    .required('A resposta não pode ser vazia!'),
 });
 
-export default function AnswerHelpOrderModal({ helpOrder, test }) {
+export default function AnswerHelpOrderModal({ helpOrder, handleSearch }) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -28,7 +28,23 @@ export default function AnswerHelpOrderModal({ helpOrder, test }) {
     setOpen(false);
   };
 
-  const handleAnswerHelpOrder = async () => {};
+  const handleAnswerHelpOrder = async ({ answer }) => {
+    try {
+      await api.post(
+        `/students/${helpOrder.student.id}/help_orders/${helpOrder.id}/answer`,
+        {
+          answer,
+        }
+      );
+
+      handleSearch('');
+
+      handleClose();
+      toast.success('Pedidos de auxílio respondido com sucesso!');
+    } catch (err) {
+      toast.error('Falha na resposta, verifique os dados!');
+    }
+  };
 
   return (
     <>
@@ -49,10 +65,15 @@ export default function AnswerHelpOrderModal({ helpOrder, test }) {
         <HelpOrderFade in={open}>
           <div>
             <h3 id="transition-modal-title">PERGUNTA DO ALUNO</h3>
-            <p id="transition-modal-description">{helpOrder.question}</p>
-            <h3 id="transition-modal-title">SUA RESPOSTA</h3>
-            <Form onSubmit={() => {}}>
-              <Input name="answer" type="text" multiline required />
+            <Scroll id="transition-modal-description">
+              {helpOrder.question}
+            </Scroll>
+            <h3 id="transition-modal-sub-title">SUA RESPOSTA</h3>
+            <Form
+              schema={helpOrderAnswerSchema}
+              onSubmit={handleAnswerHelpOrder}
+            >
+              <Input name="answer" type="text" multiline />
               <button type="submit">Responder aluno</button>
             </Form>
           </div>
@@ -71,4 +92,5 @@ AnswerHelpOrderModal.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };

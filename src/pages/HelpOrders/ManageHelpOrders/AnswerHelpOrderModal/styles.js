@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 export const HelpOrderModal = styled(Modal)`
   display: flex;
@@ -9,12 +10,21 @@ export const HelpOrderModal = styled(Modal)`
   justify-content: center;
 `;
 
+export const Scroll = styled(PerfectScrollbar)`
+  font-size: 16px;
+  line-height: 26px;
+  color: #666666;
+  text-align: justify;
+  height: 50%;
+  padding-right: 15px;
+`;
+
 export const HelpOrderFade = styled(Fade)`
   border: 0;
   border-radius: 4px;
   padding: 30px;
-  width: 25%;
-  height: 35%;
+  width: 40%;
+  height: 50%;
   background: #fff;
 
   display: flex;
@@ -28,21 +38,22 @@ export const HelpOrderFade = styled(Fade)`
     margin-bottom: 10px;
   }
 
-  p {
-    font-size: 16px;
-    color: #666666;
-    line-height: 26px;
-    text-align: left;
-    height: 40%;
+  #transition-modal-sub-title {
+    margin-top: 10px;
   }
 
   textarea {
     resize: none;
     width: 100%;
-    height: 100px;
+    height: 120px;
     border-radius: 4px;
     border: 1px solid #dcdcdc;
     padding: 15px;
+  }
+
+  span {
+    color: #fb6f91;
+    font-weight: bold;
   }
 
   button {
