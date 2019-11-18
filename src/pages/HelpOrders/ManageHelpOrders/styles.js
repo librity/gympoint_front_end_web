@@ -9,7 +9,7 @@ export const Container = styled.div`
   align-items: center;
 
   .pageHeader {
-    width: 40%;
+    width: 50%;
     height: 100%;
     margin: 40px 0 20px 0;
 
@@ -31,7 +31,7 @@ export const Scroll = styled(PerfectScrollbar)`
   padding: 30px;
   background: #fff;
   border-radius: 4px;
-  width: 40%;
+  width: 50%;
   margin-top: 20px;
   max-height: 75vh;
 `;

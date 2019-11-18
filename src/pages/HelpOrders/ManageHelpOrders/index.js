@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd, MdSearch } from 'react-icons/md';
-import { Form, Input } from '@rocketseat/unform';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
 import api from '~/services/api';
 
 import { Container, Scroll, ProductTable } from './styles';
-
-const helpOrderAnswerSchema = Yup.object().shape({
-  queryName: Yup.string(),
-});
+import AnswerHelpOrderModal from './AnswerHelpOrderModal';
 
 export default function ManageHelpOrders() {
   const [helpOrders, setHelpOrders] = useState([]);
@@ -34,8 +26,6 @@ export default function ManageHelpOrders() {
     setHelpOrders(response.data);
   };
 
-  const handleAnswerHelpOrder = async () => {};
-
   return (
     <Container>
       <div className="pageHeader">
@@ -56,13 +46,9 @@ export default function ManageHelpOrders() {
                 </td>
 
                 <td className="options">
-                  <button
-                    className="edit"
-                    type="button"
-                    onClick={() => handleAnswerHelpOrder(helpOrder)}
-                  >
+                  <AnswerHelpOrderModal helpOrder={helpOrder} className="edit">
                     responder
-                  </button>
+                  </AnswerHelpOrderModal>
                 </td>
               </tr>
             ))}
