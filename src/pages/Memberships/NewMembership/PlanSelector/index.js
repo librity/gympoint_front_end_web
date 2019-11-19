@@ -1,17 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useField } from '@rocketseat/unform';
 import Select from 'react-select';
 
-import { useField } from '@rocketseat/unform';
+import api from '~/services/api';
+
+import { Container } from './styles';
 
 export default function PlanSelector({
   name,
   label,
-  options,
   multiple,
   ...rest
 }) {
-  const ref = useRef(null);
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    const loadStudentsAndPlans = async () => {
+      const loadedPlans = await api.get('/plans');
+
+      const planOptions = [];
+      loadedPlans.data.forEach(plan =>
+        planOptions.push({ value: plan.id, label: plan.title })
+      );
+
+      setPlans(planOptions);
+    };
+
+    loadStudentsAndPlans();
+  }, []);
+
+  const { fieldName, registerField } = useField(name);
+
+  const ref = useRef();
 
   function parseSelectValue(selectRef) {
     const selectValue = selectRef.state.value;
@@ -23,44 +43,30 @@ export default function PlanSelector({
   }
 
   useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: ref.current,
-      path: 'state.value',
-      parseValue: parseSelectValue,
-      clearValue: selectRef => {
-        selectRef.select.clearValue();
-      },
-    });
+    if (ref.current) {
+      registerField({
+        name: fieldName,
+        ref: ref.current,
+        path: 'state.value',
+        parseValue: parseSelectValue,
+        clearValue: selectRef => {
+          selectRef.select.clearValue();
+        },
+      });
+    }
   }, [ref.current]); // eslint-disable-line
 
-  function getDefaultValue() {
-    if (!defaultValue) return null;
-
-    if (!multiple) {
-      return options.find(option => option.id === defaultValue);
-    }
-
-    return options.filter(option => defaultValue.includes(option.id));
-  }
-
   return (
-    <>
-      {label && <label htmlFor={fieldName}>{label}</label>}
-
+    <Container>
       <Select
         name={fieldName}
         aria-label={fieldName}
-        options={options}
+        options={plans}
         isMulti={multiple}
-        defaultValue={getDefaultValue()}
         ref={ref}
-        getOptionValue={option => option.id}
-        getOptionLabel={option => option.title}
         {...rest}
-      />
 
-      {error && <span>{error}</span>}
-    </>
+      />
+    </Container>
   );
 }

@@ -103,7 +103,8 @@ export const Content = styled.div`
       margin: 15px 5px;
     }
 
-    .SelectorInput * {
+    .studentSelector *,
+    .planSelector * {
       text-align: left;
 
       input {
@@ -146,7 +147,7 @@ export const Content = styled.div`
         flex-direction: column;
         width: 100%;
 
-        .SelectorInput {
+        .planSelector {
           * {
             color: #444;
             font-weight: normal;

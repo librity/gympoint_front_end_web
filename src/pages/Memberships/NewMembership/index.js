@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input, useField } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
-import Select from 'react-select';
 import * as Yup from 'yup';
 import { parseISO, format, addYears, startOfToday } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -13,6 +12,9 @@ import api from '~/services/api';
 import { formatPricePtBr } from '~/util/format';
 
 import { Container, Content } from './styles';
+
+import StudentSelector from './StudentSelector';
+import PlanSelector from './PlanSelector';
 
 const submitNewMembershipSchema = Yup.object().shape({
   student_id: Yup.number()
@@ -35,51 +37,22 @@ const submitNewMembershipSchema = Yup.object().shape({
 });
 
 export default function NewMembership() {
-  
+  // const [membershipDuration, setMembershipDuration] = useState(0);
+  // const [membershipPrice, setMembershipPrice] = useState(0);
 
-  const [students, setStudents] = useState([]);
-  const [plans, setPlans] = useState([]);
+  // const totalPrice = useMemo(
+  //   () => formatPricePtBr(membershipDuration * membershipPrice),
+  //   [membershipDuration, membershipPrice]
+  // );
 
-  useEffect(() => {
-    const loadStudentsAndPlans = async () => {
-      const [loadedStudents, loadedPlans] = await Promise.all([
-        api.get('/students'),
-        api.get('/plans'),
-      ]);
-
-      const studentOptions = [];
-      loadedStudents.data.forEach(student =>
-        studentOptions.push({ value: student.id, label: student.name })
-      );
-      console.tron.log(studentOptions);
-
-      const planOptions = [];
-      loadedPlans.data.forEach(plan =>
-        planOptions.push({ value: plan.id, label: plan.title })
-      );
-      console.tron.log(planOptions);
-
-      setStudents(studentOptions);
-      setPlans(planOptions);
-    };
-
-    loadStudentsAndPlans();
-  }, []);
-
-  const [membershipDuration, setMembershipDuration] = useState(0);
-  const [membershipPrice, setMembershipPrice] = useState(0);
-
-  const totalPrice = useMemo(
-    () => formatPricePtBr(membershipDuration * membershipPrice),
-    [membershipDuration, membershipPrice]
-  );
+  const ref = useRef();
 
   const navigateManageMemberships = () => {
     history.push('/memberships');
   };
 
   const submitNewMembership = async ({ student_id, plan_id, start_date }) => {
-    console.tron.log(student_id, plan_id, start_date);
+    console.tron.log(ref, student_id, plan_id, start_date);
     try {
       const response = await api.post(`/students/${student_id}/memberships`, {
         plan_id,
@@ -112,6 +85,7 @@ export default function NewMembership() {
             className="submitNewMembership"
             type="submit"
             form="submitNewMembershipForm"
+            onClick={() => submitNewMembership(ref)}
           >
             <MdDone size={20} color="#fff" />
             SALVAR
@@ -125,28 +99,26 @@ export default function NewMembership() {
           id="submitNewMembershipForm"
         >
           <label htmlFor="student_id">ALUNO</label>
-          <Select
+          <StudentSelector
             name="student_id"
             id="student_id"
-            className="SelectorInput"
+            className="studentSelector"
             isSearchable
             isClearable
             required
-            options={students}
             placeholder="Buscar aluno"
           />
           <span className="horizontalFormSpan">
             <span>
               <label htmlFor="plan_id">PLANO</label>
-              <Select
+              <PlanSelector
                 name="plan_id"
                 id="plan_id"
-                className="SelectorInput"
+                className="planSelector"
                 isSearchable={false}
                 isClearable
                 required
                 placeholder="Selecione o plano"
-                options={plans}
               />
             </span>
             <span>
@@ -177,7 +149,7 @@ export default function NewMembership() {
                 name="total_price"
                 type="text"
                 readOnly
-                value={totalPrice}
+                // value={totalPrice}
               />
             </span>
           </span>
