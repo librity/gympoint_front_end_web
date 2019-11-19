@@ -77,6 +77,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  /* all: initial; */
+
   background: #fff;
   border-radius: 4px;
   padding: 30px;

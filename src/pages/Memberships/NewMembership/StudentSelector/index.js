@@ -6,13 +6,38 @@ import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function StudentSelector({
-  name,
-  label,
-  multiple,
-  ...rest
-}) {
-  const [students, setStudents] = useState([]);
+export default function StudentSelector({ name, label, multiple, ...rest }) {
+  const ref = useRef();
+
+  const [options, setStudents] = useState([]);
+
+  const { fieldName, registerField, defaultValue, error } = useField(
+    'student_id'
+  );
+
+  // function getDefaultValue() {
+  //   if (!defaultValue) return null;
+
+  //   if (!multiple) {
+  //     return options.find(option => option.id === defaultValue);
+  //   }
+
+  //   return options.filter(option => defaultValue.includes(option.id));
+  // }
+
+  useEffect(() => {
+    // if (ref.current) {
+    registerField({
+      name: 'student_id',
+      ref: ref.current,
+      path: 'dataset.student_id',
+      // parseValue: parseSelectValue,
+      // clearValue: selectRef => {
+      //   selectRef.select.clearValue();
+      // },
+    });
+    // }
+  }, [ref.current]); // eslint-disable-line
 
   useEffect(() => {
     const loadStudentsAndPlans = async () => {
@@ -30,7 +55,7 @@ export default function StudentSelector({
   }, []);
 
   const filterStudents = inputValue => {
-    return students.filter(i =>
+    return options.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
@@ -42,10 +67,6 @@ export default function StudentSelector({
       }, 1000);
     });
 
-  const { fieldName, registerField } = useField(name);
-
-  const ref = useRef();
-
   function parseSelectValue(selectRef) {
     const selectValue = selectRef.state.value;
     if (!multiple) {
@@ -55,19 +76,9 @@ export default function StudentSelector({
     return selectValue ? selectValue.map(option => option.id) : [];
   }
 
-  useEffect(() => {
-    if (ref.current) {
-      registerField({
-        name: fieldName,
-        ref: ref.current,
-        path: 'state.value',
-        parseValue: parseSelectValue,
-        clearValue: selectRef => {
-          selectRef.select.clearValue();
-        },
-      });
-    }
-  }, [ref.current]); // eslint-disable-line
+  const handleChange = async change => {
+    console.tron.log(change);
+  };
 
   return (
     <Container>
@@ -75,9 +86,15 @@ export default function StudentSelector({
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
-        name={fieldName}
+        name="student_id"
         aria-label={fieldName}
         ref={ref}
+        // defaultValue={getDefaultValue()}
+        options={options}
+        onChange={handleChange}
+        // isMulti={multiple}
+        getOptionValue={option => option.value}
+        getOptionLabel={option => option.label}
         {...rest}
       />
     </Container>

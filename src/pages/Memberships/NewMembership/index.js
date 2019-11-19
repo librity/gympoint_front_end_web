@@ -51,17 +51,19 @@ export default function NewMembership() {
     history.push('/memberships');
   };
 
-  const submitNewMembership = async ({ student_id, plan_id, start_date }) => {
-    console.tron.log(ref, student_id, plan_id, start_date);
+  // const submitNewMembership = async ({ student_id, plan_id, start_date }) => {
+  const submitNewMembership = async data => {
+    console.tron.log(ref);
+    console.tron.log(data);
     try {
-      const response = await api.post(`/students/${student_id}/memberships`, {
-        plan_id,
-        start_date,
-      });
-      console.tron.log(response);
+      // const response = await api.post(`/students/${student_id}/memberships`, {
+      //   plan_id,
+      //   start_date,
+      // });
+      // console.tron.log(response);
 
       toast.success('Aluno cadastrado com sucesso!');
-      history.push('/memberships');
+      // history.push('/memberships');
     } catch (err) {
       toast.error('Falha no cadastro, verifique os dados!');
     }
@@ -85,7 +87,6 @@ export default function NewMembership() {
             className="submitNewMembership"
             type="submit"
             form="submitNewMembershipForm"
-            onClick={() => submitNewMembership(ref)}
           >
             <MdDone size={20} color="#fff" />
             SALVAR
@@ -94,21 +95,21 @@ export default function NewMembership() {
       </div>
       <Content>
         <Form
-          schema={submitNewMembershipSchema}
+          // schema={submitNewMembershipSchema}
           onSubmit={submitNewMembership}
           id="submitNewMembershipForm"
         >
           <label htmlFor="student_id">ALUNO</label>
           <StudentSelector
             name="student_id"
-            id="student_id"
-            className="studentSelector"
-            isSearchable
-            isClearable
-            required
-            placeholder="Buscar aluno"
+            // id="student_id"
+            // className="studentSelector"
+            // isSearchable
+            // isClearable
+            // required
+            // placeholder="Buscar aluno"
           />
-          <span className="horizontalFormSpan">
+          {/* <span className="horizontalFormSpan">
             <span>
               <label htmlFor="plan_id">PLANO</label>
               <PlanSelector
@@ -152,7 +153,7 @@ export default function NewMembership() {
                 // value={totalPrice}
               />
             </span>
-          </span>
+          </span> */}
         </Form>
       </Content>
     </Container>
