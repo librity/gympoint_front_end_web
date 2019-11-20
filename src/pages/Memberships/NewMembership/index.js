@@ -61,15 +61,15 @@ export default function NewMembership() {
       submitNewMembershipSchema.isValid({
         student_id: student.value,
         plan_id: plan.value,
-        startDate,
+        start_date: startDate,
       });
 
       await api.post(`/students/${student.value}/memberships`, {
         plan_id: plan.value,
-        startDate,
+        start_date: startDate,
       });
 
-      toast.success('Aluno cadastrado com sucesso!');
+      toast.success('Matrícula cadastrada com sucesso!');
       history.push('/memberships');
     } catch (err) {
       toast.error('Falha no cadastro, verifique os dados!');
