@@ -105,32 +105,6 @@ export const Content = styled.div`
       margin: 15px 5px;
     }
 
-    .studentSelector *,
-    .planSelector * {
-      text-align: left;
-
-      input {
-        width: 100%;
-        height: 45px;
-      }
-
-      input::placeholder {
-        font-size: 16px;
-        color: #999999;
-      }
-    }
-
-    .unformInput {
-      width: 100%;
-      height: 60px;
-    }
-
-    .unformInput::placeholder {
-      font-size: 16px;
-      color: #999999;
-      text-align: left;
-    }
-
     span {
       * {
         text-indent: 10px;
@@ -149,16 +123,15 @@ export const Content = styled.div`
         flex-direction: column;
         width: 100%;
 
-        .planSelector {
-          * {
-            color: #444;
-            font-weight: normal;
-          }
+        .unformInput {
+          width: 100%;
+          height: 60px;
+        }
 
-          input {
-            width: 100%;
-            height: 55px;
-          }
+        .unformInput::placeholder {
+          font-size: 16px;
+          color: #a2a2a2;
+          text-align: left;
         }
       }
     }

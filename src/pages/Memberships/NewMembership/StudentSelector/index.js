@@ -1,43 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useField } from '@rocketseat/unform';
+import React, { useState, useEffect } from 'react';
 import Async from 'react-select/async';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function StudentSelector({ name, label, multiple, ...rest }) {
-  const ref = useRef();
-
-  const [options, setStudents] = useState([]);
-
-  const { fieldName, registerField, defaultValue, error } = useField(
-    'student_id'
-  );
-
-  // function getDefaultValue() {
-  //   if (!defaultValue) return null;
-
-  //   if (!multiple) {
-  //     return options.find(option => option.id === defaultValue);
-  //   }
-
-  //   return options.filter(option => defaultValue.includes(option.id));
-  // }
-
-  useEffect(() => {
-    // if (ref.current) {
-    registerField({
-      name: 'student_id',
-      ref: ref.current,
-      path: 'dataset.student_id',
-      // parseValue: parseSelectValue,
-      // clearValue: selectRef => {
-      //   selectRef.select.clearValue();
-      // },
-    });
-    // }
-  }, [ref.current]); // eslint-disable-line
+export default function StudentSelector({ name, setStudent, ...rest }) {
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     const loadStudentsAndPlans = async () => {
@@ -55,7 +25,7 @@ export default function StudentSelector({ name, label, multiple, ...rest }) {
   }, []);
 
   const filterStudents = inputValue => {
-    return options.filter(i =>
+    return students.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
@@ -67,17 +37,8 @@ export default function StudentSelector({ name, label, multiple, ...rest }) {
       }, 1000);
     });
 
-  function parseSelectValue(selectRef) {
-    const selectValue = selectRef.state.value;
-    if (!multiple) {
-      return selectValue ? selectValue.id : '';
-    }
-
-    return selectValue ? selectValue.map(option => option.id) : [];
-  }
-
-  const handleChange = async change => {
-    console.tron.log(change);
+  const handleChange = change => {
+    setStudent(change);
   };
 
   return (
@@ -86,17 +47,17 @@ export default function StudentSelector({ name, label, multiple, ...rest }) {
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
-        name="student_id"
-        aria-label={fieldName}
-        ref={ref}
-        // defaultValue={getDefaultValue()}
-        options={options}
+        name={name}
+        aria-label={name}
+        options={students}
         onChange={handleChange}
-        // isMulti={multiple}
-        getOptionValue={option => option.value}
-        getOptionLabel={option => option.label}
         {...rest}
       />
     </Container>
   );
 }
+
+StudentSelector.propTypes = {
+  name: PropTypes.string.isRequired,
+  setStudent: PropTypes.func.isRequired,
+};

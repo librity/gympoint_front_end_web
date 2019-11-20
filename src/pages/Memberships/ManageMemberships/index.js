@@ -38,7 +38,7 @@ export default function ManageMemberships() {
     };
 
     loadMemberships();
-  }, []);
+  }, [memberships]);
 
   const navigateNewMemberships = () => {
     history.push('/memberships/new');

@@ -85,6 +85,7 @@ const registrations = await Registration.findAll({
 - [ ] Add plan.symbol emoji input in the New/EditPlan forms;
 - [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
 - [ ] Join auth & user store modules;
+- [ ] Combine the New & Edit Forms into a single re-usable component;
 
 ## 🎨 Layout
 

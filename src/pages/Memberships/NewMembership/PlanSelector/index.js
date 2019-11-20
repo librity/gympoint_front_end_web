@@ -1,17 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useField } from '@rocketseat/unform';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function PlanSelector({
-  name,
-  label,
-  multiple,
-  ...rest
-}) {
+export default function PlanSelector({ name, setPlan, ...rest }) {
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {
@@ -20,7 +15,13 @@ export default function PlanSelector({
 
       const planOptions = [];
       loadedPlans.data.forEach(plan =>
-        planOptions.push({ value: plan.id, label: plan.title })
+        planOptions.push({
+          value: plan.id,
+          label: plan.title,
+          duration: plan.duration,
+          price: plan.price,
+          total_price: plan.total_price,
+        })
       );
 
       setPlans(planOptions);
@@ -29,44 +30,22 @@ export default function PlanSelector({
     loadStudentsAndPlans();
   }, []);
 
-  const { fieldName, registerField } = useField(name);
-
-  const ref = useRef();
-
-  function parseSelectValue(selectRef) {
-    const selectValue = selectRef.state.value;
-    if (!multiple) {
-      return selectValue ? selectValue.id : '';
-    }
-
-    return selectValue ? selectValue.map(option => option.id) : [];
-  }
-
-  useEffect(() => {
-    if (ref.current) {
-      registerField({
-        name: fieldName,
-        ref: ref.current,
-        path: 'state.value',
-        parseValue: parseSelectValue,
-        clearValue: selectRef => {
-          selectRef.select.clearValue();
-        },
-      });
-    }
-  }, [ref.current]); // eslint-disable-line
+  const handleChange = change => (change ? setPlan(change) : setPlan({}));
 
   return (
     <Container>
       <Select
-        name={fieldName}
-        aria-label={fieldName}
+        name={name}
+        aria-label={name}
         options={plans}
-        isMulti={multiple}
-        ref={ref}
+        onChange={handleChange}
         {...rest}
-
       />
     </Container>
   );
 }
+
+PlanSelector.propTypes = {
+  name: PropTypes.string.isRequired,
+  setPlan: PropTypes.func.isRequired,
+};

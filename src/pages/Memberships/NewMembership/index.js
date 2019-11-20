@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
-import { Form, Input, useField } from '@rocketseat/unform';
+import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { parseISO, format, addYears, startOfToday } from 'date-fns';
+import { parseISO, format, addYears, addMonths, startOfToday } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import history from '~/services/history';
@@ -37,33 +37,40 @@ const submitNewMembershipSchema = Yup.object().shape({
 });
 
 export default function NewMembership() {
-  // const [membershipDuration, setMembershipDuration] = useState(0);
-  // const [membershipPrice, setMembershipPrice] = useState(0);
+  const [student, setStudent] = useState({});
+  const [plan, setPlan] = useState({});
+  const [startDate, setStartDate] = useState();
 
-  // const totalPrice = useMemo(
-  //   () => formatPricePtBr(membershipDuration * membershipPrice),
-  //   [membershipDuration, membershipPrice]
-  // );
-
-  const ref = useRef();
+  const endDate = useMemo(() => {
+    if (plan.duration && startDate) {
+      return format(
+        addMonths(parseISO(startDate), plan.duration),
+        "dd '/' MM '/' yyyy",
+        { locale: pt }
+      );
+    }
+    return 'dd / mm / yyyy';
+  }, [startDate, plan.duration]);
 
   const navigateManageMemberships = () => {
     history.push('/memberships');
   };
 
-  // const submitNewMembership = async ({ student_id, plan_id, start_date }) => {
-  const submitNewMembership = async data => {
-    console.tron.log(ref);
-    console.tron.log(data);
+  const submitNewMembership = async () => {
     try {
-      // const response = await api.post(`/students/${student_id}/memberships`, {
-      //   plan_id,
-      //   start_date,
-      // });
-      // console.tron.log(response);
+      submitNewMembershipSchema.isValid({
+        student_id: student.value,
+        plan_id: plan.value,
+        startDate,
+      });
+
+      await api.post(`/students/${student.value}/memberships`, {
+        plan_id: plan.value,
+        startDate,
+      });
 
       toast.success('Aluno cadastrado com sucesso!');
-      // history.push('/memberships');
+      history.push('/memberships');
     } catch (err) {
       toast.error('Falha no cadastro, verifique os dados!');
     }
@@ -93,23 +100,21 @@ export default function NewMembership() {
           </button>
         </aside>
       </div>
+
       <Content>
-        <Form
-          // schema={submitNewMembershipSchema}
-          onSubmit={submitNewMembership}
-          id="submitNewMembershipForm"
-        >
+        <Form onSubmit={submitNewMembership} id="submitNewMembershipForm">
           <label htmlFor="student_id">ALUNO</label>
           <StudentSelector
             name="student_id"
-            // id="student_id"
-            // className="studentSelector"
-            // isSearchable
-            // isClearable
-            // required
-            // placeholder="Buscar aluno"
+            id="student_id"
+            className="studentSelector"
+            isSearchable
+            isClearable
+            setStudent={setStudent}
+            required
+            placeholder="Buscar aluno"
           />
-          {/* <span className="horizontalFormSpan">
+          <span className="horizontalFormSpan">
             <span>
               <label htmlFor="plan_id">PLANO</label>
               <PlanSelector
@@ -120,6 +125,7 @@ export default function NewMembership() {
                 isClearable
                 required
                 placeholder="Selecione o plano"
+                setPlan={setPlan}
               />
             </span>
             <span>
@@ -129,6 +135,8 @@ export default function NewMembership() {
                 id="start_date"
                 name="start_date"
                 type="date"
+                value={startDate}
+                onInput={e => setStartDate(e.target.value)}
                 required
               />
             </span>
@@ -138,8 +146,9 @@ export default function NewMembership() {
                 className="unformInput"
                 id="end_date"
                 name="end_date"
-                type="date"
+                type="text"
                 readOnly
+                value={endDate}
               />
             </span>
             <span>
@@ -150,10 +159,10 @@ export default function NewMembership() {
                 name="total_price"
                 type="text"
                 readOnly
-                // value={totalPrice}
+                value={formatPricePtBr(plan.total_price || 0)}
               />
             </span>
-          </span> */}
+          </span>
         </Form>
       </Content>
     </Container>
