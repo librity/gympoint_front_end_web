@@ -78,6 +78,7 @@ const registrations = await Registration.findAll({
 
 ### Opcionais
 
+- [ ] Refactor everything, especially all the styling;
 - [ ] Adicione paginação no front-end e back-end para todas listagens;
 - [ ] Utilize [máscaras](https://github.com/sanniassin/react-input-mask) para inputs numéricos de valores, peso e altura;
 - [ ] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons;
@@ -86,6 +87,7 @@ const registrations = await Registration.findAll({
 - [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
 - [ ] Join auth & user store modules;
 - [ ] Combine the New & Edit Forms into a single re-usable component;
+- [ ] Use [react-datepicker](https://github.com/Hacker0x01/react-datepicker/) for the date inputs;
 
 ## 🎨 Layout
 
