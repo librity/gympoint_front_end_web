@@ -8,23 +8,17 @@ import AnswerHelpOrderModal from './AnswerHelpOrderModal';
 export default function ManageHelpOrders() {
   const [helpOrders, setHelpOrders] = useState([]);
 
-  useEffect(() => {
-    const loadHelpOrders = async () => {
-      const response = await api.get('help_orders');
-
-      setHelpOrders(response.data);
-    };
-
-    loadHelpOrders();
-  }, []);
-
-  const handleSearch = async ({ queryName }) => {
-    const response = await api.get('/help_orders', {
-      params: { name: queryName },
+  const loadHelpOrders = async () => {
+    const response = await api.get('help_orders', {
+      params: { unanswered: true },
     });
 
     setHelpOrders(response.data);
   };
+
+  useEffect(() => {
+    loadHelpOrders();
+  }, []);
 
   return (
     <Container>
@@ -48,7 +42,7 @@ export default function ManageHelpOrders() {
                 <td className="options">
                   <AnswerHelpOrderModal
                     helpOrder={helpOrder}
-                    handleSearch={handleSearch}
+                    handleSearch={loadHelpOrders}
                     className="edit"
                   >
                     responder
