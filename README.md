@@ -88,6 +88,7 @@ const registrations = await Registration.findAll({
 - [ ] Join auth & user store modules;
 - [ ] Combine the New & Edit Forms into a single re-usable component;
 - [ ] Use [react-datepicker](https://github.com/Hacker0x01/react-datepicker/) for the date inputs;
+- [ ] Cover every nook&cranny with test suites;
 
 ## 🎨 Layout
 
