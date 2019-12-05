@@ -85,7 +85,7 @@ const registrations = await Registration.findAll({
 - [ ] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/);
 - [ ] Add plan.symbol emoji input in the New/EditPlan forms;
 - [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
-- [ ] Join auth & user store modules;
+- [x] Merge auth & user store modules;
 - [ ] Combine the New & Edit Forms into a single re-usable component;
 - [ ] Use [react-datepicker](https://github.com/Hacker0x01/react-datepicker/) for the date inputs;
 - [ ] Cover every nook&cranny with test suites;

@@ -9,7 +9,7 @@ import logo from '~/assets/logo_small.svg';
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
-  const user = useSelector(state => state.user.profile);
+  const user = useSelector(state => state.auth.profile);
 
   const dispatch = useDispatch();
 
