@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -10,6 +9,9 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import { formatPricePtBr } from '~/util/format';
+
+import ReturnButton from '~/components/ReturnButton';
+import SaveButton from '~/components/SaveButton';
 
 import { Container, Content } from './styles';
 
@@ -64,18 +66,9 @@ export default function EditPlan({ location }) {
         <h1>Edição de plano</h1>
 
         <aside>
-          <button
-            className="navigateManagePlans"
-            type="button"
-            onClick={navigateManagePlans}
-          >
-            <MdChevronLeft size={20} color="#fff" />
-            VOLTAR
-          </button>
-          <button className="updatePlan" type="submit" form="updatePlanForm">
-            <MdDone size={20} color="#fff" />
-            SALVAR
-          </button>
+          <ReturnButton onClick={navigateManagePlans} />
+
+          <SaveButton form="updatePlanForm" />
         </aside>
       </div>
       <Content>

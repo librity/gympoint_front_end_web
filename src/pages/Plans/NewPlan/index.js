@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -8,6 +7,9 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import { formatPricePtBr } from '~/util/format';
+
+import ReturnButton from '~/components/ReturnButton';
+import SaveButton from '~/components/SaveButton';
 
 import { Container, Content } from './styles';
 
@@ -60,22 +62,9 @@ export default function NewPlan() {
         <h1>Cadastro de plano</h1>
 
         <aside>
-          <button
-            className="navigateManagePlans"
-            type="button"
-            onClick={navigateManagePlans}
-          >
-            <MdChevronLeft size={20} color="#fff" />
-            VOLTAR
-          </button>
-          <button
-            className="submitNewPlan"
-            type="submit"
-            form="submitNewPlanForm"
-          >
-            <MdDone size={20} color="#fff" />
-            SALVAR
-          </button>
+          <ReturnButton onClick={navigateManagePlans} />
+
+          <SaveButton form="submitNewPlanForm" />
         </aside>
       </div>
       <Content>

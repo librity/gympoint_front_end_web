@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd, MdSearch } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 
 import history from '~/services/history';
 import api from '~/services/api';
+
+import RegisterButton from '~/components/RegisterButton';
 
 import { Container, Scroll, ProductTable } from './styles';
 
@@ -59,14 +61,7 @@ export default function ManageStudents() {
         <h1>Gerenciando alunos</h1>
 
         <aside>
-          <button
-            className="navigateNewStudent"
-            type="button"
-            onClick={navigateNewStudent}
-          >
-            <MdAdd size={20} color="#fff" />
-            CADASTRAR
-          </button>
+          <RegisterButton onClick={navigateNewStudent} />
           <Form schema={studentQuerySchema} onSubmit={handleSearch}>
             <button className="search" type="submit">
               <MdSearch size={20} color="#999" />

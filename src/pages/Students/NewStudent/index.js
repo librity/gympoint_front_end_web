@@ -1,11 +1,13 @@
 import React from 'react';
-import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import history from '~/services/history';
 import api from '~/services/api';
+
+import ReturnButton from '~/components/ReturnButton';
+import SaveButton from '~/components/SaveButton';
 
 import { Container, Content } from './styles';
 
@@ -67,22 +69,9 @@ export default function NewStudent() {
         <h1>Cadastro de aluno</h1>
 
         <aside>
-          <button
-            className="navigateManageStudents"
-            type="button"
-            onClick={navigateManageStudents}
-          >
-            <MdChevronLeft size={20} color="#fff" />
-            VOLTAR
-          </button>
-          <button
-            className="submitNewStudent"
-            type="submit"
-            form="submitNewStudentForm"
-          >
-            <MdDone size={20} color="#fff" />
-            SALVAR
-          </button>
+          <ReturnButton onClick={navigateManageStudents} />
+
+          <SaveButton form="submitNewStudentForm" />
         </aside>
       </div>
       <Content>

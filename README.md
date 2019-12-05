@@ -81,7 +81,7 @@ const registrations = await Registration.findAll({
 - [ ] Refactor everything, especially all the styling;
 - [ ] Adicione paginação no front-end e back-end para todas listagens;
 - [ ] Utilize [máscaras](https://github.com/sanniassin/react-input-mask) para inputs numéricos de valores, peso e altura;
-- [ ] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons;
+- [x] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons;
 - [ ] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/);
 - [ ] Add plan.symbol emoji input in the New/EditPlan forms;
 - [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;

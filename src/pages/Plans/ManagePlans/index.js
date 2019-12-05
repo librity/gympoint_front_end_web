@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -7,6 +6,8 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import { formatPricePtBr } from '~/util/format';
+
+import RegisterButton from '~/components/RegisterButton';
 
 import { Container, Scroll, ProductTable } from './styles';
 
@@ -60,14 +61,7 @@ export default function ManagePlans() {
         <h1>Gerenciando planos</h1>
 
         <aside>
-          <button
-            className="navigateNewPlan"
-            type="button"
-            onClick={navigateNewPlan}
-          >
-            <MdAdd size={20} color="#fff" />
-            CADASTRAR
-          </button>
+          <RegisterButton onClick={navigateNewPlan} />
         </aside>
       </div>
       <Scroll>

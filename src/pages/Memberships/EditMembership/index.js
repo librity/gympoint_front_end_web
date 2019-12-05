@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -11,6 +10,9 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import { formatPricePtBr } from '~/util/format';
+
+import ReturnButton from '~/components/ReturnButton';
+import SaveButton from '~/components/SaveButton';
 
 import { Container, Content } from './styles';
 
@@ -97,22 +99,9 @@ export default function EditMembership({ location }) {
         <h1>Edição de matrícula</h1>
 
         <aside>
-          <button
-            className="navigateManageMemberships"
-            type="button"
-            onClick={navigateManageMemberships}
-          >
-            <MdChevronLeft size={20} color="#fff" />
-            VOLTAR
-          </button>
-          <button
-            className="submitNewMembership"
-            type="submit"
-            form="submitNewMembershipForm"
-          >
-            <MdDone size={20} color="#fff" />
-            SALVAR
-          </button>
+          <ReturnButton onClick={navigateManageMemberships} />
+
+          <SaveButton form="submitNewMembershipForm" />
         </aside>
       </div>
 

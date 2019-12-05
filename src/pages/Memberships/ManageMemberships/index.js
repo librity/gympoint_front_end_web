@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd, MdCheckCircle } from 'react-icons/md';
+import { MdCheckCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { parseISO, format } from 'date-fns';
@@ -7,6 +7,8 @@ import pt from 'date-fns/locale/pt';
 
 import history from '~/services/history';
 import api from '~/services/api';
+
+import RegisterButton from '~/components/RegisterButton';
 
 import { Container, Scroll, ProductTable } from './styles';
 
@@ -72,14 +74,7 @@ export default function ManageMemberships() {
         <h1>Gerenciando matrículas</h1>
 
         <aside>
-          <button
-            className="navigateNewMemberships"
-            type="button"
-            onClick={navigateNewMemberships}
-          >
-            <MdAdd size={20} color="#fff" />
-            CADASTRAR
-          </button>
+          <RegisterButton onClick={navigateNewMemberships} />
         </aside>
       </div>
       <Scroll>
