@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MdCheckCircle } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -9,57 +8,53 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import RegisterButton from '~/components/RegisterButton';
+import EditButton from '~/components/EditButton';
+import DeleteButton from '~/components/DeleteButton';
 
 import { Container, Scroll, ProductTable } from './styles';
 
 export default function ManageMemberships() {
   const [memberships, setMemberships] = useState([]);
 
+  const loadMemberships = async ({ queryName }) => {
+    const response = await api.get('/memberships', {
+      params: { name: queryName },
+    });
+
+    const data = response.data.map(membership => ({
+      ...membership,
+      formattedTitle: `${membership.plan.symbol} ${membership.plan.title}`,
+      formattedStartDate: format(
+        parseISO(membership.start_date),
+        "d 'de' MMMM 'de' yyyy",
+        {
+          locale: pt,
+        }
+      ),
+      formattedEndDate: format(
+        parseISO(membership.end_date),
+        "d 'de' MMMM 'de' yyyy",
+        { locale: pt }
+      ),
+    }));
+
+    setMemberships(data);
+  };
+
   useEffect(() => {
-    const loadMemberships = async () => {
-      const response = await api.get('memberships');
-
-      const data = response.data.map(membership => ({
-        ...membership,
-        formattedTitle: `${membership.plan.symbol} ${membership.plan.title}`,
-        formattedStartDate: format(
-          parseISO(membership.start_date),
-          "d 'de' MMMM 'de' yyyy",
-          {
-            locale: pt,
-          }
-        ),
-        formattedEndDate: format(
-          parseISO(membership.end_date),
-          "d 'de' MMMM 'de' yyyy",
-          { locale: pt }
-        ),
-      }));
-
-      setMemberships(data);
-    };
-
-    loadMemberships();
-  }, [memberships]);
+    loadMemberships('');
+  }, []);
 
   const navigateNewMemberships = () => {
     history.push('/memberships/new');
   };
 
-  const handleSearch = async ({ queryName }) => {
-    const response = await api.get('/memberships', {
-      params: { name: queryName },
-    });
-
-    setMemberships(response.data);
-  };
-
-  const handleDeleteMembership = async ({ id, student }) => {
+  const handleDelete = async ({ id, student }) => {
     if (window.confirm('Você tem certeza que deseja remover esta matrícula?')) {
       try {
         await api.delete(`/students/${student.id}/memberships/${id}`);
 
-        handleSearch('');
+        loadMemberships('');
 
         toast.success('Matrícula apagada com sucesso!');
       } catch (err) {
@@ -115,22 +110,14 @@ export default function ManageMemberships() {
                   )}
                 </td>
                 <td className="options">
-                  <Link
+                  <EditButton
                     to={{
                       pathname: '/memberships/edit',
                       state: { membership },
                     }}
-                    className="edit"
-                  >
-                    editar
-                  </Link>
-                  <button
-                    className="delete"
-                    type="button"
-                    onClick={() => handleDeleteMembership(membership)}
-                  >
-                    apagar
-                  </button>
+                  />
+
+                  <DeleteButton onClick={handleDelete} remove={membership} />
                 </td>
               </tr>
             ))}

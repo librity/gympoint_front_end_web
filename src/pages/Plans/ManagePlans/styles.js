@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { darken } from 'polished';
 
 export const Container = styled.div`
   text-align: center;
@@ -106,19 +105,6 @@ export const ProductTable = styled.table`
       margin-left: 20px;
       padding-bottom: 5px;
       padding-top: 5px;
-    }
-
-    .edit {
-      color: #4d85ee;
-      &:hover {
-        color: ${darken(0.1, '#4d85ee')};
-      }
-    }
-    .delete {
-      color: #de3b3b;
-      &:hover {
-        color: ${darken(0.1, '#de3b3b')};
-      }
     }
   }
 `;

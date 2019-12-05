@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -9,6 +8,8 @@ import history from '~/services/history';
 import api from '~/services/api';
 
 import RegisterButton from '~/components/RegisterButton';
+import EditButton from '~/components/EditButton';
+import DeleteButton from '~/components/DeleteButton';
 
 import { Container, Scroll, ProductTable } from './styles';
 
@@ -19,21 +20,7 @@ const studentQuerySchema = Yup.object().shape({
 export default function ManageStudents() {
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const loadStudents = async () => {
-      const response = await api.get('students');
-
-      setStudents(response.data);
-    };
-
-    loadStudents();
-  }, []);
-
-  const navigateNewStudent = () => {
-    history.push('/students/new');
-  };
-
-  const handleSearch = async ({ queryName }) => {
+  const loadStudents = async ({ queryName }) => {
     const response = await api.get('/students', {
       params: { name: queryName },
     });
@@ -41,12 +28,20 @@ export default function ManageStudents() {
     setStudents(response.data);
   };
 
-  const handleDeleteStudent = async ({ id }) => {
+  useEffect(() => {
+    loadStudents('');
+  }, []);
+
+  const navigateNewStudent = () => {
+    history.push('/students/new');
+  };
+
+  const handleDelete = async ({ id }) => {
     if (window.confirm('Você tem certeza que deseja remover este aluno?')) {
       try {
         await api.delete(`/students/${id}`);
 
-        handleSearch('');
+        loadStudents('');
 
         toast.success('Aluno apagado com sucesso!');
       } catch (err) {
@@ -62,7 +57,7 @@ export default function ManageStudents() {
 
         <aside>
           <RegisterButton onClick={navigateNewStudent} />
-          <Form schema={studentQuerySchema} onSubmit={handleSearch}>
+          <Form schema={studentQuerySchema} onSubmit={loadStudents}>
             <button className="search" type="submit">
               <MdSearch size={20} color="#999" />
             </button>
@@ -96,19 +91,11 @@ export default function ManageStudents() {
                   <strong>{student.age}</strong>
                 </td>
                 <td className="options">
-                  <Link
+                  <EditButton
                     to={{ pathname: '/students/edit', state: { student } }}
-                    className="edit"
-                  >
-                    editar
-                  </Link>
-                  <button
-                    className="delete"
-                    type="button"
-                    onClick={() => handleDeleteStudent(student)}
-                  >
-                    apagar
-                  </button>
+                  />
+
+                  <DeleteButton onClick={handleDelete} remove={student} />
                 </td>
               </tr>
             ))}
