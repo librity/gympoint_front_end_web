@@ -2,7 +2,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
 import history from '~/services/history';
 import api from '~/services/api';
@@ -13,22 +12,9 @@ import ReturnButton from '~/components/ReturnButton';
 import SaveButton from '~/components/SaveButton';
 import PlanForm from '~/components/PlanForm';
 
+import PlanSchema from '~/schemas/PlanSchema';
+
 import { Container } from './styles';
-
-const updatePlanSchema = Yup.object().shape({
-  title: Yup.string().required('O título é obrigatório!'),
-
-  duration: Yup.number()
-    .integer('Insira número inteiro!')
-    .min(1, 'Duração mínima: 1 mês!')
-    .max(24, 'Duração máxima: 24 mês!')
-    .required('A duração é obrigatória!'),
-
-  price: Yup.number('Insira número!')
-    .min(0.0, 'Preço mínimo: R$ 0,00!')
-    .max(1000.0, 'Preço máximo: R$ 1000,00!')
-    .required('O preço é obrigatório!'),
-});
 
 export default function EditPlan({ location }) {
   const { plan } = location.state;
@@ -73,7 +59,7 @@ export default function EditPlan({ location }) {
       </div>
       <PlanForm
         plan={plan}
-        schema={updatePlanSchema}
+        schema={PlanSchema}
         onSubmit={updatePlan}
         totalPrice={totalPrice}
         setPlanDuration={setPlanDuration}

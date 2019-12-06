@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
 import history from '~/services/history';
 import api from '~/services/api';
@@ -11,31 +10,9 @@ import ReturnButton from '~/components/ReturnButton';
 import SaveButton from '~/components/SaveButton';
 import StudentForm from '~/components/StudentForm';
 
+import StudentSchema from '~/schemas/StudentSchema';
+
 import { Container } from './styles';
-
-const updateStudentSchema = Yup.object().shape({
-  name: Yup.string().required('O nome é obrigatório!'),
-
-  email: Yup.string()
-    .email('Insira um e-mail válido!')
-    .required('O e-mail é obrigatório!'),
-
-  date_of_birth: Yup.date('Insira uma data válida!')
-    .min('1900-01-01', 'Insira uma data válida!')
-    .max(new Date(), 'Insira uma data válida!')
-    .required('A data de nascimento é obrigatória!'),
-
-  weight_metric: Yup.number('Insira um número inteiro!')
-    .integer('Apenas números inteiros!')
-    .min(0, 'Insira um peso válido!')
-    .max(635, 'Insira um peso válido!')
-    .required('A altura é obrigatória!'),
-
-  height_metric: Yup.number('Insira um número válido!')
-    .min(0, 'Insira uma altura válida!')
-    .max(2.72, 'Insira uma altura válida!')
-    .required('A altura é obrigatória!'),
-});
 
 export default function EditStudent({ location }) {
   const { student } = location.state;
@@ -80,7 +57,7 @@ export default function EditStudent({ location }) {
       </div>
       <StudentForm
         student={student}
-        schema={updateStudentSchema}
+        schema={StudentSchema}
         onSubmit={updateStudent}
       />
     </Container>

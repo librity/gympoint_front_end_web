@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
-import { parseISO, format, addYears, addMonths, startOfToday } from 'date-fns';
+import { parseISO, format, addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import PropTypes from 'prop-types';
 
@@ -14,27 +13,9 @@ import ReturnButton from '~/components/ReturnButton';
 import SaveButton from '~/components/SaveButton';
 import MembershipForm from '~/components/MembershipForm';
 
+import MembershipSchema from '~/schemas/MembershipSchema';
+
 import { Container } from './styles';
-
-const submitNewMembershipSchema = Yup.object().shape({
-  student_id: Yup.number()
-    .integer()
-    .min(1, 'Insira um aluno válido!')
-    .required('O aluno é obrigatório!'),
-
-  plan_id: Yup.number()
-    .integer()
-    .min(1, 'Insira um plano válido!')
-    .required('O plano é obrigatório!'),
-
-  start_date: Yup.date('Insira uma data válida!')
-    .min(startOfToday(), 'Matriculas não podem ser criadas retroativamente!')
-    .max(
-      addYears(new Date(), 3),
-      'Matriculas não podem ser agendadas mais do que três anos!'
-    )
-    .required('A data de início é obrigatória!'),
-});
 
 export default function EditMembership({ location }) {
   const { membership } = location.state;
@@ -71,7 +52,7 @@ export default function EditMembership({ location }) {
 
   const submitNewMembership = async () => {
     try {
-      submitNewMembershipSchema.isValid({
+      MembershipSchema.isValid({
         student_id: student.value,
         plan_id: plan.value,
         start_date: startDate,
