@@ -19,7 +19,7 @@ export default function StudentSelector({
       const loadedStudents = await api.get('/students');
 
       const studentOptions = [];
-      loadedStudents.data.forEach(student =>
+      loadedStudents.data.rows.forEach(student =>
         studentOptions.push({ value: student.id, label: student.name })
       );
 

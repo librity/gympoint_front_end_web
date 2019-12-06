@@ -25,28 +25,26 @@ export default function ManageStudents() {
   const [count, setCount] = useState(0);
   const requestsPerPage = 10;
 
-  // const loadStudents = useCallback(() => {
-  //   setTechs([...techs, newTech]);
-  //   setNewTech('');
-  // }, [techs, newTech]);
+  const loadStudents = useCallback(
+    async ({ queryName }) => {
+      if (queryName !== name) {
+        setName(queryName);
+        setPage(1);
+      }
 
-  const loadStudents = async ({ queryName }) => {
-    if (queryName !== name) {
-      setName(queryName);
-      setPage(1);
-    }
+      const response = await api.get('/students', {
+        params: { name, page, requestsPerPage },
+      });
 
-    const response = await api.get('/students', {
-      params: { name, page, requestsPerPage },
-    });
-
-    setStudents(response.data.rows);
-    setCount(response.data.count);
-  };
+      setStudents(response.data.rows);
+      setCount(response.data.count);
+    },
+    [name, page]
+  );
 
   useEffect(() => {
     loadStudents({ queryName: name });
-  }, [page, name]);
+  }, [page, name, loadStudents]);
 
   const navigateNewStudent = () => {
     history.push('/students/new');
@@ -57,6 +55,7 @@ export default function ManageStudents() {
       try {
         await api.delete(`/students/${id}`);
 
+        setPage(1);
         loadStudents({ queryName: name });
 
         toast.success('Aluno apagado com sucesso!');
@@ -73,7 +72,7 @@ export default function ManageStudents() {
   };
 
   const handleNext = () => {
-    if (count % (page * requestsPerPage) < requestsPerPage - 1) {
+    if (count - page * requestsPerPage > 0) {
       setPage(page + 1);
     }
   };

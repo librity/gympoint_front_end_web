@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MdCheckCircle } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { parseISO, format } from 'date-fns';
@@ -10,18 +10,22 @@ import api from '~/services/api';
 import RegisterButton from '~/components/RegisterButton';
 import EditButton from '~/components/EditButton';
 import DeleteButton from '~/components/DeleteButton';
+import PageNavigation from '~/components/PageNavigation';
 
 import { Container, Scroll, ProductTable } from './styles';
 
 export default function ManageMemberships() {
   const [memberships, setMemberships] = useState([]);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const requestsPerPage = 10;
 
-  const loadMemberships = async ({ queryName }) => {
+  const loadMemberships = useCallback(async () => {
     const response = await api.get('/memberships', {
-      params: { name: queryName },
+      params: { page, requestsPerPage },
     });
 
-    const data = response.data.map(membership => ({
+    const data = response.data.rows.map(membership => ({
       ...membership,
       formattedTitle: `${membership.plan.symbol} ${membership.plan.title}`,
       formattedStartDate: format(
@@ -39,11 +43,12 @@ export default function ManageMemberships() {
     }));
 
     setMemberships(data);
-  };
+    setCount(response.data.count);
+  }, [page]);
 
   useEffect(() => {
-    loadMemberships('');
-  }, []);
+    loadMemberships();
+  }, [page, loadMemberships]);
 
   const navigateNewMemberships = () => {
     history.push('/memberships/new');
@@ -54,12 +59,25 @@ export default function ManageMemberships() {
       try {
         await api.delete(`/students/${student.id}/memberships/${id}`);
 
-        loadMemberships('');
+        setPage(1);
+        loadMemberships();
 
         toast.success('Matrícula apagada com sucesso!');
       } catch (err) {
         toast.error('Falha na ataulização, verifique os dados!');
       }
+    }
+  };
+
+  const handlePrevious = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (count - page * requestsPerPage > 0) {
+      setPage(page + 1);
     }
   };
 
@@ -123,6 +141,7 @@ export default function ManageMemberships() {
             ))}
           </tbody>
         </ProductTable>
+        <PageNavigation previous={handlePrevious} next={handleNext} />
       </Scroll>
     </Container>
   );

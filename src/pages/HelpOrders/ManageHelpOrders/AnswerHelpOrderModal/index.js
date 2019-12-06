@@ -17,7 +17,7 @@ const helpOrderAnswerSchema = Yup.object().shape({
     .required('A resposta não pode ser vazia!'),
 });
 
-export default function AnswerHelpOrderModal({ helpOrder, handleSearch }) {
+export default function AnswerHelpOrderModal({ helpOrder, loadHelpOrders }) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -37,7 +37,7 @@ export default function AnswerHelpOrderModal({ helpOrder, handleSearch }) {
         }
       );
 
-      handleSearch('');
+      loadHelpOrders();
 
       handleClose();
       toast.success('Pedidos de auxílio respondido com sucesso!');
@@ -92,5 +92,5 @@ AnswerHelpOrderModal.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  handleSearch: PropTypes.func.isRequired,
+  loadHelpOrders: PropTypes.func.isRequired,
 };

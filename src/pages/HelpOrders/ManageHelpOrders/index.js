@@ -1,24 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import api from '~/services/api';
+
+import PageNavigation from '~/components/PageNavigation';
 
 import { Container, Scroll, ProductTable } from './styles';
 import AnswerHelpOrderModal from './AnswerHelpOrderModal';
 
 export default function ManageHelpOrders() {
   const [helpOrders, setHelpOrders] = useState([]);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const requestsPerPage = 10;
 
-  const loadHelpOrders = async () => {
+  const loadHelpOrders = useCallback(async () => {
     const response = await api.get('help_orders', {
-      params: { unanswered: true },
+      params: { unanswered: true, page, requestsPerPage },
     });
 
-    setHelpOrders(response.data);
-  };
+    setHelpOrders(response.data.rows);
+    setCount(response.data.count);
+  }, [page]);
 
   useEffect(() => {
     loadHelpOrders();
-  }, []);
+  }, [loadHelpOrders]);
+
+  const handlePrevious = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (count - page * requestsPerPage > 0) {
+      setPage(page + 1);
+    }
+  };
 
   return (
     <Container>
@@ -42,7 +60,7 @@ export default function ManageHelpOrders() {
                 <td className="options">
                   <AnswerHelpOrderModal
                     helpOrder={helpOrder}
-                    handleSearch={loadHelpOrders}
+                    loadHelpOrders={loadHelpOrders}
                     className="edit"
                   >
                     responder
@@ -52,6 +70,7 @@ export default function ManageHelpOrders() {
             ))}
           </tbody>
         </ProductTable>
+        <PageNavigation previous={handlePrevious} next={handleNext} />
       </Scroll>
     </Container>
   );

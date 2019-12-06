@@ -14,7 +14,7 @@ export default function PlanSelector({ name, setPlan, ...rest }) {
       const loadedPlans = await api.get('/plans');
 
       const planOptions = [];
-      loadedPlans.data.forEach(plan =>
+      loadedPlans.data.rows.forEach(plan =>
         planOptions.push({
           value: plan.id,
           label: plan.title,
