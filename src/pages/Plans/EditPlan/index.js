@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -12,8 +11,9 @@ import { formatPricePtBr } from '~/util/format';
 
 import ReturnButton from '~/components/ReturnButton';
 import SaveButton from '~/components/SaveButton';
+import PlanForm from '~/components/PlanForm';
 
-import { Container, Content } from './styles';
+import { Container } from './styles';
 
 const updatePlanSchema = Yup.object().shape({
   title: Yup.string().required('O título é obrigatório!'),
@@ -68,53 +68,17 @@ export default function EditPlan({ location }) {
         <aside>
           <ReturnButton onClick={navigateManagePlans} />
 
-          <SaveButton form="updatePlanForm" />
+          <SaveButton form="studentForm" />
         </aside>
       </div>
-      <Content>
-        <Form
-          schema={updatePlanSchema}
-          onSubmit={updatePlan}
-          id="updatePlanForm"
-          initialData={plan}
-        >
-          <label htmlFor="title">TÍTULO DO PLANO</label>
-          <Input id="title" name="title" type="text" required />
-          <span>
-            <span>
-              <label htmlFor="duration">DURAÇÃO (em meses)</label>
-              <Input
-                id="duration"
-                name="duration"
-                type="number"
-                required
-                onInput={e => setPlanDuration(e.target.value)}
-              />
-            </span>
-            <span>
-              <label htmlFor="price">PREÇO MENSAL</label>
-              <Input
-                id="price"
-                name="price"
-                type="number"
-                step="0.01"
-                required
-                onInput={e => setPlanPrice(e.target.value)}
-              />
-            </span>
-            <span>
-              <label htmlFor="total_price">PREÇO TOTAL</label>
-              <Input
-                id="total_price"
-                name="total_price"
-                type="text"
-                readOnly
-                value={totalPrice}
-              />
-            </span>
-          </span>
-        </Form>
-      </Content>
+      <PlanForm
+        plan={plan}
+        schema={updatePlanSchema}
+        onSubmit={updatePlan}
+        totalPrice={totalPrice}
+        setPlanDuration={setPlanDuration}
+        setPlanPrice={setPlanPrice}
+      />
     </Container>
   );
 }

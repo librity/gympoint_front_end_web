@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 import { Content } from './styles';
 
-export default function EditStudent({ student, schema, onSubmit }) {
+export default function StudentForm({ student, schema, onSubmit }) {
   return (
     <Content>
       <Form
@@ -68,12 +68,12 @@ export default function EditStudent({ student, schema, onSubmit }) {
   );
 }
 
-EditStudent.propTypes = {
+StudentForm.propTypes = {
   student: PropTypes,
   schema: PropTypes.instanceOf(Yup).isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-EditStudent.defaultProps = {
+StudentForm.defaultProps = {
   student: {},
 };
