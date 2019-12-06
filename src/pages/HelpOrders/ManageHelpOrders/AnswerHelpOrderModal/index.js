@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Backdrop from '@material-ui/core/Backdrop';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const helpOrderAnswerSchema = Yup.object().shape({
 });
 
 export default function AnswerHelpOrderModal({ helpOrder, loadHelpOrders }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
