@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import api from '~/services/api';
 import RegisterButton from '~/components/RegisterButton';
 import EditButton from '~/components/EditButton';
 import DeleteButton from '~/components/DeleteButton';
+import PageNavigation from '~/components/PageNavigation';
 
 import { Container, Scroll, ProductTable } from './styles';
 
@@ -19,18 +20,33 @@ const studentQuerySchema = Yup.object().shape({
 
 export default function ManageStudents() {
   const [students, setStudents] = useState([]);
+  const [name, setName] = useState('');
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const requestsPerPage = 10;
+
+  // const loadStudents = useCallback(() => {
+  //   setTechs([...techs, newTech]);
+  //   setNewTech('');
+  // }, [techs, newTech]);
 
   const loadStudents = async ({ queryName }) => {
+    if (queryName !== name) {
+      setName(queryName);
+      setPage(1);
+    }
+
     const response = await api.get('/students', {
-      params: { name: queryName },
+      params: { name, page, requestsPerPage },
     });
 
-    setStudents(response.data);
+    setStudents(response.data.rows);
+    setCount(response.data.count);
   };
 
   useEffect(() => {
-    loadStudents('');
-  }, []);
+    loadStudents({ queryName: name });
+  }, [page, name]);
 
   const navigateNewStudent = () => {
     history.push('/students/new');
@@ -41,12 +57,24 @@ export default function ManageStudents() {
       try {
         await api.delete(`/students/${id}`);
 
-        loadStudents('');
+        loadStudents({ queryName: name });
 
         toast.success('Aluno apagado com sucesso!');
       } catch (err) {
         toast.error('Falha na ataulização, verifique os dados!');
       }
+    }
+  };
+
+  const handlePrevious = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (count % (page * requestsPerPage) < requestsPerPage - 1) {
+      setPage(page + 1);
     }
   };
 
@@ -101,6 +129,7 @@ export default function ManageStudents() {
             ))}
           </tbody>
         </ProductTable>
+        <PageNavigation previous={handlePrevious} next={handleNext} />
       </Scroll>
     </Container>
   );
