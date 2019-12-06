@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { parseISO, format, addYears, addMonths, startOfToday } from 'date-fns';
@@ -13,11 +12,9 @@ import { formatPricePtBr } from '~/util/format';
 
 import ReturnButton from '~/components/ReturnButton';
 import SaveButton from '~/components/SaveButton';
+import MembershipForm from '~/components/MembershipForm';
 
-import { Container, Content } from './styles';
-
-import StudentSelector from './StudentSelector';
-import PlanSelector from './PlanSelector';
+import { Container } from './styles';
 
 const submitNewMembershipSchema = Yup.object().shape({
   student_id: Yup.number()
@@ -101,80 +98,22 @@ export default function EditMembership({ location }) {
         <aside>
           <ReturnButton onClick={navigateManageMemberships} />
 
-          <SaveButton form="submitNewMembershipForm" />
+          <SaveButton form="membershipForm" />
         </aside>
       </div>
 
-      <Content>
-        <Form
-          onSubmit={submitNewMembership}
-          id="submitNewMembershipForm"
-          initialData={membership}
-        >
-          <label htmlFor="student_id">ALUNO</label>
-          <StudentSelector
-            name="student_id"
-            id="student_id"
-            className="studentSelector"
-            isSearchable
-            isClearable
-            setStudent={setStudent}
-            defaultValue={student}
-            required
-            placeholder="Buscar aluno"
-          />
-          <span className="horizontalFormSpan">
-            <span>
-              <label htmlFor="plan_id">PLANO</label>
-              <PlanSelector
-                name="plan_id"
-                id="plan_id"
-                className="planSelector"
-                isSearchable={false}
-                isClearable
-                required
-                defaultValue={plan}
-                placeholder="Selecione o plano"
-                setPlan={setPlan}
-              />
-            </span>
-            <span>
-              <label htmlFor="start_date">DATA DE INÍCIO</label>
-              <Input
-                className="unformInput"
-                id="start_date"
-                name="start_date"
-                type="date"
-                value={startDate}
-                onInput={e => setStartDate(e.target.value)}
-                required
-              />
-            </span>
-            <span>
-              <label htmlFor="end_date">DATA DE TÉRMINO</label>
-              <Input
-                className="unformInput"
-                id="end_date"
-                name="end_date"
-                type="text"
-                readOnly
-                value={endDate}
-              />
-            </span>
-            <span>
-              <label htmlFor="total_price">VALOR FINAL</label>
-              <Input
-                className="unformInput"
-                id="total_price"
-                name="total_price"
-                type="text"
-                readOnly
-                value={formatPricePtBr(plan.total_price || 0)}
-              />
-            </span>
-          </span>
-        </Form>
-      </Content>
+      <MembershipForm
+        membership={membership}
+        onSubmit={submitNewMembership}
+        student={student}
+        setStudent={setStudent}
+        plan={plan}
+        setPlan={setPlan}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        formatPricePtBr={formatPricePtBr}
+      />
     </Container>
   );
 }
