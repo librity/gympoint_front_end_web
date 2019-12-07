@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
-import InputMask from 'react-input-mask';
 
 import { Content } from './styles';
 
@@ -44,21 +43,23 @@ export default function StudentForm({ student, schema, onSubmit }) {
           </span>
           <span>
             <label htmlFor="weight_metric">PESO (em kg)</label>
-            <InputMask
-              mask="99  kg"
+            <Input
               id="weight_metric"
               name="weight_metric"
-              placeholder="60  kg"
+              type="number"
+              placeholder="60"
+              required
             />
           </span>
           <span>
             <label htmlFor="height_metric">Altura (em metros)</label>
-            <InputMask
+            <Input
               id="height_metric"
               name="height_metric"
+              type="number"
               step="0.01"
-              mask="9,99  m"
-              placeholder="1,70  m"
+              placeholder="1,70"
+              required
             />
           </span>
         </span>

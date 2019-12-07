@@ -78,18 +78,18 @@ const registrations = await Registration.findAll({
 
 ### Opcionais
 
-- [ ] Refactor everything, especially all the styling;
 - [x] Adicione paginação no front-end e back-end para todas listagens;
-- [ ] Utilize [máscaras](https://github.com/sanniassin/react-input-mask) para inputs numéricos de valores, peso e altura;
-- [ ] See about using `react-input-mask` for date inputs too;
-- [x] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons (edit and delete);
-- [x] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/) DONE BUT NOT IMPLEMENTED;
-- [ ] Add plan.symbol emoji input in the New/EditPlan forms;
-- [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
 - [x] Merge auth & user store modules;
 - [x] Combine the New & Edit Forms into a single re-usable components;
+- [x] Separate frquently-used tags into components of their own, like the Create, Save and Navigate buttons (edit and delete);
+- [x] Substitute `confirm` dialogues with [Material-UI Modals](https://material-ui.com/components/modal/) DONE BUT NOT IMPLEMENTED;
+- [ ] Utilize [máscaras](https://github.com/sanniassin/react-input-mask) para inputs numéricos de valores, peso e altura;
+- [ ] See about using `react-input-mask` for date inputs too;
+- [ ] Add plan.symbol emoji input in the New/EditPlan forms;
+- [ ] Add plan.symbol svg input in the New/EditPlan forms, and modify API accordingly;
 - [ ] Use [react-datepicker](https://github.com/Hacker0x01/react-datepicker/) for the date inputs;
 - [ ] Cover every nook&cranny with test suites;
+- [ ] Refactor everything, especially all the styling;
 
 ## 🎨 Layout
 
